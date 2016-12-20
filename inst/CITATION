@@ -1,0 +1,15 @@
+citHeader("To cite the 'ppiechart' package in publications use:")
+
+year = sub('.*(2[[:digit:]]{3})-.*', '\\1', meta$Date, perl = TRUE)
+vers = paste('R package version', meta$Version)
+
+citEntry(
+  entry = 'manual',
+  title = meta$Title,
+  author = Filter(function(p) 'aut' %in% p$role, as.person(meta$Author)),
+  year = year,
+  note = vers,
+  url = meta$URL,
+  textVersion = paste("Chunqiao Luo, Shasha Bai(", year, "). ", meta$Title, ". ", vers, ".", sep = "")
+)
+

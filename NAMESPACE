@@ -1,0 +1,15 @@
+useDynLib(patternplot)
+export(patternpie)
+export(imagepie)
+import(ggplot2)
+importFrom("grDevices", "rgb")
+importFrom("stats", "median")
+importFrom("utils", "head")
+importFrom("gtable", "gtable_filter")
+importFrom(png, readPNG)
+importFrom(jpeg, readJPEG)
+importFrom(dplyr, filter)
+importFrom(Rcpp, evalCpp)
+importFrom(RcppParallel, RcppParallelLibs)
+
+

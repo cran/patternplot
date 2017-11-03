@@ -1,4 +1,4 @@
-citHeader("To cite the 'ppiechart' package in publications use:")
+citHeader("To cite the 'patternplot' package in publications use:")
 
 year = sub('.*(2[[:digit:]]{3})-.*', '\\1', meta$Date, perl = TRUE)
 vers = paste('R package version', meta$Version)

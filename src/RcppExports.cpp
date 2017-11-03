@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // imagetodf
 DataFrame imagetodf(NumericVector& image_matrix, NumericMatrix V, float bottom, float top, float left, float right);
-RcppExport SEXP patternplot_imagetodf(SEXP image_matrixSEXP, SEXP VSEXP, SEXP bottomSEXP, SEXP topSEXP, SEXP leftSEXP, SEXP rightSEXP) {
+RcppExport SEXP _patternplot_imagetodf(SEXP image_matrixSEXP, SEXP VSEXP, SEXP bottomSEXP, SEXP topSEXP, SEXP leftSEXP, SEXP rightSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,4 +20,31 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(imagetodf(image_matrix, V, bottom, top, left, right));
     return rcpp_result_gen;
 END_RCPP
+}
+// imagetodf2
+DataFrame imagetodf2(NumericVector& image_matrix, NumericMatrix V, float bottom, float top, float left, float right);
+RcppExport SEXP _patternplot_imagetodf2(SEXP image_matrixSEXP, SEXP VSEXP, SEXP bottomSEXP, SEXP topSEXP, SEXP leftSEXP, SEXP rightSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector& >::type image_matrix(image_matrixSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type V(VSEXP);
+    Rcpp::traits::input_parameter< float >::type bottom(bottomSEXP);
+    Rcpp::traits::input_parameter< float >::type top(topSEXP);
+    Rcpp::traits::input_parameter< float >::type left(leftSEXP);
+    Rcpp::traits::input_parameter< float >::type right(rightSEXP);
+    rcpp_result_gen = Rcpp::wrap(imagetodf2(image_matrix, V, bottom, top, left, right));
+    return rcpp_result_gen;
+END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_patternplot_imagetodf", (DL_FUNC) &_patternplot_imagetodf, 6},
+    {"_patternplot_imagetodf2", (DL_FUNC) &_patternplot_imagetodf2, 6},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_patternplot(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }

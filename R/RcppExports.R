@@ -2,6 +2,10 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 imagetodf <- function(image_matrix, V, bottom = 0, top = 1, left = 0, right = 1) {
-    .Call('patternplot_imagetodf', PACKAGE = 'patternplot', image_matrix, V, bottom, top, left, right)
+    .Call(`_patternplot_imagetodf`, image_matrix, V, bottom, top, left, right)
+}
+
+imagetodf2 <- function(image_matrix, V, bottom = 0, top = 1, left = 0, right = 1) {
+    .Call(`_patternplot_imagetodf2`, image_matrix, V, bottom, top, left, right)
 }
 

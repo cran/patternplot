@@ -1,9 +1,7 @@
 #' Plot a pie chart with slices filled with png and jpeg images.
 #'
 #' The \code{imagepie} function is a tool for creating versatile pie charts 
-#' by filling the slices with external png and jpeg images. It can create 
-#' either black and white pie charts which are useful for scientific publications, 
-#' or colorful pie charts which are good for presentations. 
+#' by filling the slices with external png and jpeg images. 
 #' @importFrom Rcpp evalCpp
 #' @useDynLib patternplot 
 #' @param group a vector of strings, containing the names of each slice. 
@@ -21,12 +19,11 @@
 #'
 #' @details \code{imagepie} function offers flexible ways in doing pie charts.
 #'   
-#' @author Chunqiao Luo (cluo@@uams.edu)
+#' @author Chunqiao Luo (chunqiaoluo@gmail.com)
 #'
 #' @seealso Function \code{patternpie}  
 #'
 #' @example vignettes/example-imagepie.R
-
 
 
 imagepie<-function(group,pct,label,label.size=4,label.color='black', label.distance=1.35,pattern.type, frame.color='black',frame.size=1){

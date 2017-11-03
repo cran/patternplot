@@ -1,6 +1,10 @@
-useDynLib(patternplot)
+useDynLib(patternplot, .registration = TRUE)
 export(patternpie)
 export(imagepie)
+export(patternboxplot)
+export(imageboxplot)
+export(patternbar)
+export(imagebar)
 import(ggplot2)
 importFrom("grDevices", "rgb")
 importFrom("stats", "median")
@@ -11,5 +15,5 @@ importFrom(jpeg, readJPEG)
 importFrom(dplyr, filter)
 importFrom(Rcpp, evalCpp)
 importFrom(RcppParallel, RcppParallelLibs)
-
+importFrom(R6, R6Class)
 

@@ -1,21 +1,18 @@
-#' Plot a piechart using patterns and colors to fill the slices.
+#' Plot a pie chart using patterns and colors to fill the slices.
 #'
-#' The \code{patternpie} function is a tool for creating versatile pie charts.
-#' It has the capacity to fill slices with patterns and colors. Users can create 
-#' either black and white pattern pie charts which are useful for scientific 
-#' publications, or colorful pie charts with or without patterns which are 
-#' good for presentations. 
+#' The \code{patternpie} function is a tool for creating versatile pie charts 
+#' by filling the slices with colors and patterns.
 #' @importFrom Rcpp evalCpp
 #' @useDynLib patternplot
 #' @param group a vector of strings, containing the names of each slice. 
 #' @param pct a vector of non-negative numbers, containing percentages of each group.
 #' The numbers must sum up to 100.
-#' @param label a vector of strings, giving the names for the slices shown in the pie chart   
-#' @param label.size the font size of labels shown in the pie chart   
-#' @param label.color the color of labels shown in the pie chart   
-#' @param label.distance the distance of labels from the border of the pie chart 
+#' @param label a vector of strings, giving the names for the slices shown in the pie chart.   
+#' @param label.size the font size of labels shown in the pie chart.   
+#' @param label.color the color of labels shown in the pie chart.   
+#' @param label.distance the distance of labels from the border of the pie chart. 
 #' @param pattern.type a vector of patterns to be filled in the slices. 
-#' There are 13 pattern types: 'blank', 'bricks', 'circles1','circles2', 
+#' There are 15 pattern types: 'blank', 'bricks', 'circles1','circles2', 'vdashes', 'hdashes',
 #' 'crosshatch','dots', 'grid','hlines','nelines', 'nwlines', 'shells', 'vlines', 'waves'. 
 #' @param pattern.color a vector of colors for the lines/dots of patterns.
 #' @param pattern.line.size a numeric value, the line size for the lines/dots of patterns.
@@ -23,20 +20,20 @@
 #' @param frame.color the color for the borders of slices.
 #' @param frame.size a numeric value, the line size for the borders of slices.
 #' @param pixel a numeric value, the pixel resolution of pie chart. 
-
+#' @param density a numeric vector, the density for the lines/dots of patterns. 
 #' 
 #' @return  A ggplot object.
 #'
 #' @details \code{patternpie} function offers flexible ways in doing pie charts. 
 #'   
-#' @author Chunqiao Luo (cluo@@uams.edu)
+#' @author Chunqiao Luo (chunqiaoluo@gmail.com)
 #'
 #' @seealso Function \code{imagepie}  
 #'
 #' @example vignettes/example-patternpie.R
 
 patternpie<-function(group,pct,label,label.size=4, label.color='black',label.distance=1.2,pattern.type, pattern.color=rep('black', length(group)),
-                    pattern.line.size=1, background.color=rep('white', length(group)), frame.color='black',frame.size=1, pixel){
+                    pattern.line.size=1, background.color=rep('white', length(group)), frame.color='black',frame.size=1, pixel=0.3, density=rep(10, length(group))){
   
   #pie frame data
   start<-0.02*c(0, head(cumsum(pct), -1))
@@ -54,7 +51,7 @@ patternpie<-function(group,pct,label,label.size=4, label.color='black',label.dis
   picdf<-list()
     for (i in 1:length(group)){
       piedata[[i]] <- slicepos(r=5,start=start[i], end=end[i])
-      suppressWarnings(pattern(type=pattern.type[i], density=10, color=pattern.color[i], pattern.line.size=pattern.line.size, background.color=background.color[i], pixel=pixel))
+      suppressWarnings(pattern(type=pattern.type[i], density=density[i], color=pattern.color[i], pattern.line.size=pattern.line.size, background.color=background.color[i], pixel=pixel))
       picdata[[i]]<-imagetodf(readPNG(paste(location,'/',pattern.type[i],".png", sep='')), as.matrix(piedata[[i]]),left = min(piedata[[i]]$x), right = max(piedata[[i]]$x),bottom = min(piedata[[i]]$y),top = max(piedata[[i]]$y))
       picdf[[i]] <- filter(picdata[[i]], pos==1)
       picdata[[i]]<-NULL

@@ -1,7 +1,12 @@
 
 pattern<-function(type='bricks', density=8, pattern.line.size=0.5,color='black', background.color='white', pixel=0.7){
   #background color
-  background_theme <- theme(panel.grid=element_blank(), panel.background = element_rect(fill = background.color))
+  background_theme <- theme(panel.grid=element_blank(), panel.background = element_rect(fill = background.color), panel.border = element_rect(linetype = "solid", color=background.color,size=0.0001,fill = NA))
+  
+  if((density %% 2) != 0) {
+    density<-density+1
+  } 
+  
   
   if(type=='blank'){
     var1<-rep(seq(1, 5, by=1), each=5)
@@ -21,6 +26,7 @@ pattern<-function(type='bricks', density=8, pattern.line.size=0.5,color='black',
     
   }
   
+
   fullcircle<- function(center=c(0,0), npoints=400){
     hc <- seq(0, 2*pi, length.out=npoints)
     df <- data.frame(
@@ -116,6 +122,24 @@ pattern<-function(type='bricks', density=8, pattern.line.size=0.5,color='black',
     p
   }
   
+  if (type=='vdashes'){
+    var1<-rep(seq(1, density, by=1), density/2)
+    var1<-sort(var1)
+    var2<-rep(c(seq(1, density, by=2), seq(2, density, by=2)), density/2)
+    df<-data.frame(var1, var2)
+    p<-ggplot(df, aes(var1, var2))+ geom_segment(aes(x =var1, y = var2-1, xend =var1, yend = var2), size=pattern.line.size, color=color)+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
+    p
+  }
+  
+  if (type=='hdashes'){
+    var1<-rep(seq(1, density, by=1), density/2)
+    var1<-sort(var1)
+    var2<-rep(c(seq(1, density, by=2), seq(2, density, by=2)), density/2)
+    df<-data.frame(var1, var2)
+    p<-ggplot(df, aes(var1, var2))+ geom_segment(aes(y =var1, x = var2-1, yend =var1, xend = var2), size=pattern.line.size, color=color)+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
+    p
+  }
+  
   if(type=='waves'){
     var1<-rep(seq(0, 5*density, length=density*100), density)
     var2<-sin(var1)
@@ -153,9 +177,7 @@ pattern<-function(type='bricks', density=8, pattern.line.size=0.5,color='black',
   gt<-gtable_filter(gt, "panel")
   
   outputlocation<-gsub('\\\\\\\\','/',tempdir())
-  ggsave(paste(outputlocation,'/',type,'.png', sep=''), gt,width = pixel, height = pixel)
+  ggsave(paste(outputlocation,'/',type,'.png', sep=''), gt,width = pixel, height =pixel)
   
 }
-
-
 

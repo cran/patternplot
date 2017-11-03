@@ -2,12 +2,13 @@
 % Please edit documentation in R/patternpie.R
 \name{patternpie}
 \alias{patternpie}
-\title{Plot a piechart using patterns and colors to fill the slices.}
+\title{Plot a pie chart using patterns and colors to fill the slices.}
 \usage{
 patternpie(group, pct, label, label.size = 4, label.color = "black",
   label.distance = 1.2, pattern.type, pattern.color = rep("black",
   length(group)), pattern.line.size = 1, background.color = rep("white",
-  length(group)), frame.color = "black", frame.size = 1, pixel)
+  length(group)), frame.color = "black", frame.size = 1, pixel = 0.3,
+  density = rep(10, length(group)))
 }
 \arguments{
 \item{group}{a vector of strings, containing the names of each slice.}
@@ -15,16 +16,16 @@ patternpie(group, pct, label, label.size = 4, label.color = "black",
 \item{pct}{a vector of non-negative numbers, containing percentages of each group.
 The numbers must sum up to 100.}
 
-\item{label}{a vector of strings, giving the names for the slices shown in the pie chart}
+\item{label}{a vector of strings, giving the names for the slices shown in the pie chart.}
 
-\item{label.size}{the font size of labels shown in the pie chart}
+\item{label.size}{the font size of labels shown in the pie chart.}
 
-\item{label.color}{the color of labels shown in the pie chart}
+\item{label.color}{the color of labels shown in the pie chart.}
 
-\item{label.distance}{the distance of labels from the border of the pie chart}
+\item{label.distance}{the distance of labels from the border of the pie chart.}
 
 \item{pattern.type}{a vector of patterns to be filled in the slices. 
-There are 13 pattern types: 'blank', 'bricks', 'circles1','circles2', 
+There are 15 pattern types: 'blank', 'bricks', 'circles1','circles2', 'vdashes', 'hdashes',
 'crosshatch','dots', 'grid','hlines','nelines', 'nwlines', 'shells', 'vlines', 'waves'.}
 
 \item{pattern.color}{a vector of colors for the lines/dots of patterns.}
@@ -38,35 +39,37 @@ There are 13 pattern types: 'blank', 'bricks', 'circles1','circles2',
 \item{frame.size}{a numeric value, the line size for the borders of slices.}
 
 \item{pixel}{a numeric value, the pixel resolution of pie chart.}
+
+\item{density}{a numeric vector, the density for the lines/dots of patterns.}
 }
 \value{
 A ggplot object.
 }
 \description{
-The \code{patternpie} function is a tool for creating versatile pie charts.
-It has the capacity to fill slices with patterns and colors. Users can create 
-either black and white pattern pie charts which are useful for scientific 
-publications, or colorful pie charts with or without patterns which are 
-good for presentations.
+The \code{patternpie} function is a tool for creating versatile pie charts 
+by filling the slices with colors and patterns.
 }
 \details{
 \code{patternpie} function offers flexible ways in doing pie charts.
 }
 \examples{
-##Piecharts in black and white
-#A simple example to start with. 
+#Example 1
 library(patternplot)
-group<-c('A', 'B')
-pct<-c(25, 75)
-label<-paste(group, ' ',pct,'\%', sep='' )
-pattern.type<-c('hlines', 'grid')
-patternpie(group=group,pct=pct,label =label, pattern.type=pattern.type,
-           pixel=0.5, pattern.line.size=0.3, frame.size=1.5)
-}
-\author{
-Chunqiao Luo (cluo@uams.edu)
+data <- read.csv(system.file("extdata", "vegetables.csv", package="patternplot"))
+pattern.type<-c('hdashes', 'vdashes', 'bricks')
+patternpie(group=data$group,pct=data$pct,label=data$label, pattern.type=pattern.type, 
+           pixel=0.3, pattern.line.size=0.2, frame.size=1.5)
+
+#Example 2
+pattern.color<-c('red3','green3', 'white' )
+background.color<-c('dodgerblue', 'lightpink', 'orange')
+patternpie(group=data$group,pct=data$pct,label=data$label, pattern.type=pattern.type,
+           pattern.color=pattern.color,background.color=background.color, 
+           frame.color='grey40', pixel=0.3, pattern.line.size=0.3, frame.size=1.5)
 }
 \seealso{
 Function \code{imagepie}
 }
-
+\author{
+Chunqiao Luo (chunqiaoluo@gmail.com)
+}

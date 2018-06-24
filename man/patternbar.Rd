@@ -31,7 +31,7 @@ patternbar(data, x, y, group = NULL, xlab = "", ylab = "",
 
 \item{vjust}{the distance of labels from the top border of each bar.}
 
-\item{pattern.type}{a vector of patterns to be filled in the bars 
+\item{pattern.type}{a vector of patterns to be filled in the bars
 There are 15 pattern types: 'blank', 'bricks', 'circles1','circles2', 'vdashes', 'hdashes',
 'crosshatch','dots', 'grid','hlines','nelines', 'nwlines', 'shells', 'vlines', 'waves'.}
 
@@ -61,7 +61,7 @@ There are 15 pattern types: 'blank', 'bricks', 'circles1','circles2', 'vdashes',
 A ggplot object.
 }
 \description{
-The \code{patternbar} function is a tool for creating versatile bar charts 
+The \code{patternbar} function is a tool for creating versatile bar charts
 by filling the bars with colors and patterns.
 }
 \details{
@@ -70,22 +70,22 @@ by filling the bars with colors and patterns.
 \examples{
 #Example 1
 data <- read.csv(system.file("extdata", "monthlyexp.csv", package="patternplot"))
-data<-data[which(data$City=='City 1'),]
-x<-factor(data$Type_of_Expenses, c('Housing', 'Food',  'Childcare'))
-y<-data$Monthly_Expenses
+data<-data[which(data$Location=='City 1'),]
+x<-factor(data$Type, c('Housing', 'Food',  'Childcare'))
+y<-data$Amount
 pattern.type<-c('hdashes', 'blank', 'crosshatch')
 pattern.color=c('black','black', 'black')
 background.color=c('white','white', 'white')
 density<-c(20, 20, 10)
 patternbar(data,x, y,group=NULL,ylab='Monthly Expenses, Dollars', pattern.type=pattern.type,
-           pattern.color=pattern.color, background.color=background.color, 
+           pattern.color=pattern.color, background.color=background.color,
            pattern.line.size=0.5,frame.color=c('black', 'black', 'black'), density=density)
 
 #Example 2
 pattern.color=c('black','white', 'grey20')
 background.color=c('lightgreen','lightgreen', 'lightgreen')
 patternbar(data,x, y,group=NULL,ylab='Monthly Expenses, Dollars', pattern.type=pattern.type,
-           pattern.color=pattern.color, background.color=background.color, 
+           pattern.color=pattern.color, background.color=background.color,
            pattern.line.size=0.5,frame.color=c('black', 'black', 'black'), density=density)
 
 }

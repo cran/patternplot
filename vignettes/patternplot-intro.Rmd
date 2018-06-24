@@ -54,11 +54,11 @@ library(ggplot2)
 library(jpeg)
 Tomatoes <-  readJPEG(system.file("img", "tomatoes.jpg", package="patternplot"))
 Peas <- readJPEG(system.file("img", "peas.jpg", package="patternplot"))
-Peppers <-  readJPEG(system.file("img", "peppers.jpg", package="patternplot"))
+Potatoes <-  readJPEG(system.file("img", "potatoes.jpg", package="patternplot"))
 
 #Example 1
 data <- read.csv(system.file("extdata", "vegetables.csv", package="patternplot"))
-pattern.type<-list(Tomatoes,Peas,Peppers)
+pattern.type<-list(Tomatoes,Peas,Potatoes)
 imagepie(group=data$group,pct=data$pct,label=data$label,
                pattern.type=pattern.type,frame.color='burlywood4', frame.size=0.8, 
                label.color='forestgreen', label.size=5, label.distance=1.3)
@@ -70,10 +70,10 @@ Versatile  Bar charts
 Bar charts produced by **patternbar()**
 ```{r e3, fig.width=6, fig.height=6}
 data <- read.csv(system.file("extdata", "monthlyexp.csv", package="patternplot"))
-data<-data[which(data$City=='City 1'),]
+data<-data[which(data$Location=='City 1'),]
 #Example 1
-x<-factor(data$Type_of_Expenses, c('Housing', 'Food',  'Childcare'))
-y<-data$Monthly_Expenses
+x<-factor(data$Type, c('Housing', 'Food',  'Childcare'))
+y<-data$Amount
 pattern.type<-c('hdashes', 'blank', 'crosshatch')
 pattern.color=c('black','black', 'black')
 background.color=c('white','white', 'white')
@@ -101,9 +101,9 @@ food<-readJPEG(system.file("img", "food.jpg", package="patternplot"))
 housing <-readJPEG(system.file("img", "housing.jpg", package="patternplot"))
 #Example 1
 data <- read.csv(system.file("extdata", "monthlyexp.csv", package="patternplot"))
-data<-data[which(data$City=='City 1'),]
-x<-factor(data$Type_of_Expenses, c('Housing', 'Food',  'Childcare'))
-y<-data$Monthly_Expenses
+data<-data[which(data$Location=='City 1'),]
+x<-factor(data$Type, c('Housing', 'Food',  'Childcare'))
+y<-data$Amount
 pattern.type<-list(housing, food, childcare)
 imagebar(data,x, y,group=NULL,pattern.type=pattern.type, 
                 frame.color=c('darkred', 'darkgreen', 'orange'), 

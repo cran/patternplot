@@ -183,7 +183,7 @@ patternboxplot<-function(data,x, y, group=NULL, xlab='', ylab='',outlier.shape=2
     frame.color2<-rep(frame.color,time=length(unique(x)))
     linetype2<-rep(linetype,time=length(unique(x)))
     
-    X<-Y<-r<-g<-b<-a<-pos<-x<-y<-NULL
+    X<-Y<-r<-g<-b<-a<-pos<-NULL
     g<- ggplot()+ mapply(function(i) geom_raster(data = picdata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:dim(gdata)[1])+scale_fill_identity()+geom_rect(aes(xmin=gdata[,"xmin"],xmax=gdata[,"xmax"],ymin=gdata[,"lower"],ymax=gdata[,"upper"]), color=frame.color2,size=frame.size, fill=NA)
     g<-g+geom_segment(aes(x=gdata[,"xmin"],y=gdata[,"middle"], xend=gdata[,"xmax"], yend=gdata[,"middle"]), color=frame.color2,size=frame.size)+geom_segment(aes(x=gdata[,"xmiddel"],y=gdata[,"ymin"], xend=gdata[,"xmiddel"], yend=gdata[,"lower"]), color=frame.color2, linetype=linetype2,size=frame.size)+geom_segment(aes(x=gdata[,"xmiddel"],y=gdata[,"ymax"], xend=gdata[,"xmiddel"], yend=gdata[,"upper"]), color=frame.color2, linetype=linetype2,size=frame.size)
     g<-g+geom_segment(aes(x=gdata[,"xmiddel"]-gdata[, "xrange"],y=gdata[,"ymax"], xend=gdata[,"xmiddel"]+gdata[, "xrange"], yend=gdata[,"ymax"]), color=frame.color2,size=frame.size)+geom_segment(aes(x=gdata[,"xmiddel"]-gdata[, "xrange"],y=gdata[,"ymin"], xend=gdata[,"xmiddel"]+gdata[, "xrange"], yend=gdata[,"ymin"]), color=frame.color2,size=frame.size)

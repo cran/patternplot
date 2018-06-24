@@ -156,7 +156,7 @@ imagebar<-function(data,x, y, group=NULL, xlab='', ylab='', label.size=3.5, vjus
     ldata<-ggplot_build(bplot)$data[[2]]
     frame.color2<-rep(frame.color,time=length(unique(x)))
     
-    X<-Y<-r<-g<-b<-a<-pos<-x<-y<-label<-NULL
+    X<-Y<-r<-g<-b<-a<-pos<-label<-NULL
     g<- ggplot()+ mapply(function(i) geom_raster(data = picdata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:dim(gdata)[1])+scale_fill_identity()+geom_rect(aes(xmin=gdata[,"xmin"],xmax=gdata[,"xmax"],ymin=0,ymax=gdata[,"ymax"]), color=frame.color2,size=frame.size, fill=NA)
     g<-g+ theme_bw()+xlab(xlab)+ylab(ylab)+ scale_x_continuous(breaks=seq(1:length(levels(x))), labels=levels(x))+geom_text(data=ldata, aes(x, y, label=label), vjust=vjust, size=label.size)
     g+ mapply(function(i) geom_raster(data = legenddata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:length(pattern.type))+geom_rect(aes(xmin=legend.frame.xmin,xmax=legend.frame.xmax,ymin=legend.frame.ymin,ymax=legend.frame.ymax), color=frame.color,size=frame.size, fill=NA)+geom_text(aes(x=legend.label.x, y=legend.label.y, label=levels(group), hjust=0, vjust=0), size=label.size)

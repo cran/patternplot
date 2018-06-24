@@ -61,11 +61,11 @@ housing <-readJPEG(system.file("img", "housing.jpg", package="patternplot"))
 
 #Example 1
 data <- read.csv(system.file("extdata", "monthlyexp.csv", package="patternplot"))
-data<-data[which(data$City=='City 1'),]
-x<-factor(data$Type_of_Expenses, c('Housing', 'Food',  'Childcare'))
-y<-data$Monthly_Expenses
+data<-data[which(data$Location=='City 1'),]
+x<-factor(data$Type, c('Housing', 'Food',  'Childcare'))
+y<-data$Amount
 pattern.type<-list(housing, food, childcare)
-imagebar(data,x, y,group=NULL,pattern.type=pattern.type, 
+imagebar(data,x, y,group=NULL,pattern.type=pattern.type,
          frame.color=c('darkred', 'darkgreen', 'orange'),
          ylab='Monthly Expenses, Dollars')
 

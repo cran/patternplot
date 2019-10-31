@@ -4,12 +4,12 @@
 \alias{imageboxplot}
 \title{Plot a boxplot with boxes filled with png and jpeg images.}
 \usage{
-imageboxplot(data, x, y, group = NULL, xlab = "", ylab = "", pattern.type,
-  frame.color = "black", linetype = "solid", frame.size = 1,
-  outlier.shape = 21, outlier.color = "black", outlier.size = 1,
-  legend.type = "h", legend.h = 6, legend.x.pos = 0.5,
-  legend.y.pos = 0.5, legend.pixel = 0.3, legend.label.size = 3,
-  legend.ratio1 = 0.1)
+imageboxplot(data, x, y, group = NULL, xlab = "", ylab = "",
+  label.size = 3.5, pattern.type, frame.color = "black",
+  linetype = "solid", frame.size = 1, outlier.shape = 21,
+  outlier.color = "black", outlier.size = 1, legend.type = "h",
+  legend.h = 6, legend.x.pos = 1.1, legend.y.pos = 0.49,
+  legend.w = 0.2, legend.pixel = 0.3)
 }
 \arguments{
 \item{data}{the data to be used.}
@@ -23,6 +23,8 @@ imageboxplot(data, x, y, group = NULL, xlab = "", ylab = "", pattern.type,
 \item{xlab}{a character string to give x axis label.}
 
 \item{ylab}{a character string to give y axis label.}
+
+\item{label.size}{the font size of legend labels.}
 
 \item{pattern.type}{a list of objects returned by \code{readPNG} and \code{readJPEG} used to fill boxplots.}
 
@@ -46,11 +48,9 @@ imageboxplot(data, x, y, group = NULL, xlab = "", ylab = "", pattern.type,
 
 \item{legend.y.pos}{a numeric value to change the position of legend text on y axis.}
 
+\item{legend.w}{a numeric value to change the width of legends.}
+
 \item{legend.pixel}{a numeric value to change the pixel of legend boxes.}
-
-\item{legend.label.size}{the font size of legend labels.}
-
-\item{legend.ratio1}{a numeric value to fine-tune the position of legend boxes on y axis.}
 }
 \value{
 A ggplot object.
@@ -60,11 +60,12 @@ The \code{imageboxplot} function is a tool for creating versatile boxplots
 by filling the boxplots with external png and jpeg images.
 }
 \details{
-\code{imageboxplot} function offers flexible ways in doing boxplots.
+\code{imageboxplot} function offers flexible ways of doing boxplots.
 }
 \examples{
 library(patternplot)
 library(jpeg)
+library(ggplot2)
 
 Orange<-readJPEG(system.file("img", "oranges.jpg", package="patternplot"))
 Strawberry <-readJPEG(system.file("img", "strawberries.jpg", package="patternplot"))
@@ -76,8 +77,10 @@ x<-data$Fruit
 y<-data$Weight
 group<-data$Store
 pattern.type<-list(Orange, Strawberry, Watermelon)
-imageboxplot(data,x, y,group=NULL,pattern.type=pattern.type, 
-             frame.color=c('orange', 'darkred', 'darkgreen'),ylab='Weight, Pounds')
+imageboxplot(data,x,y,group=NULL,pattern.type=pattern.type,
+frame.color=c('orange', 'darkred', 'darkgreen'),ylab='Weight, Pounds')
+
+
 }
 \seealso{
 Function \code{patternboxplot}

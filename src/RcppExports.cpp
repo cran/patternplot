@@ -5,9 +5,9 @@
 
 using namespace Rcpp;
 
-// imagetodf
-DataFrame imagetodf(NumericVector& image_matrix, NumericMatrix V, float bottom, float top, float left, float right);
-RcppExport SEXP _patternplot_imagetodf(SEXP image_matrixSEXP, SEXP VSEXP, SEXP bottomSEXP, SEXP topSEXP, SEXP leftSEXP, SEXP rightSEXP) {
+// imagetodf1
+DataFrame imagetodf1(NumericVector& image_matrix, NumericMatrix V, float bottom, float top, float left, float right);
+RcppExport SEXP _patternplot_imagetodf1(SEXP image_matrixSEXP, SEXP VSEXP, SEXP bottomSEXP, SEXP topSEXP, SEXP leftSEXP, SEXP rightSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -17,7 +17,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< float >::type top(topSEXP);
     Rcpp::traits::input_parameter< float >::type left(leftSEXP);
     Rcpp::traits::input_parameter< float >::type right(rightSEXP);
-    rcpp_result_gen = Rcpp::wrap(imagetodf(image_matrix, V, bottom, top, left, right));
+    rcpp_result_gen = Rcpp::wrap(imagetodf1(image_matrix, V, bottom, top, left, right));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -37,10 +37,47 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// imagetodf3
+DataFrame imagetodf3(NumericVector& image_matrix, NumericMatrix V, float r1, float r2, float bottom, float top, float left, float right);
+RcppExport SEXP _patternplot_imagetodf3(SEXP image_matrixSEXP, SEXP VSEXP, SEXP r1SEXP, SEXP r2SEXP, SEXP bottomSEXP, SEXP topSEXP, SEXP leftSEXP, SEXP rightSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector& >::type image_matrix(image_matrixSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type V(VSEXP);
+    Rcpp::traits::input_parameter< float >::type r1(r1SEXP);
+    Rcpp::traits::input_parameter< float >::type r2(r2SEXP);
+    Rcpp::traits::input_parameter< float >::type bottom(bottomSEXP);
+    Rcpp::traits::input_parameter< float >::type top(topSEXP);
+    Rcpp::traits::input_parameter< float >::type left(leftSEXP);
+    Rcpp::traits::input_parameter< float >::type right(rightSEXP);
+    rcpp_result_gen = Rcpp::wrap(imagetodf3(image_matrix, V, r1, r2, bottom, top, left, right));
+    return rcpp_result_gen;
+END_RCPP
+}
+// imagetodf4
+DataFrame imagetodf4(NumericVector& image_matrix, NumericMatrix V, float r2, float bottom, float top, float left, float right);
+RcppExport SEXP _patternplot_imagetodf4(SEXP image_matrixSEXP, SEXP VSEXP, SEXP r2SEXP, SEXP bottomSEXP, SEXP topSEXP, SEXP leftSEXP, SEXP rightSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector& >::type image_matrix(image_matrixSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type V(VSEXP);
+    Rcpp::traits::input_parameter< float >::type r2(r2SEXP);
+    Rcpp::traits::input_parameter< float >::type bottom(bottomSEXP);
+    Rcpp::traits::input_parameter< float >::type top(topSEXP);
+    Rcpp::traits::input_parameter< float >::type left(leftSEXP);
+    Rcpp::traits::input_parameter< float >::type right(rightSEXP);
+    rcpp_result_gen = Rcpp::wrap(imagetodf4(image_matrix, V, r2, bottom, top, left, right));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_patternplot_imagetodf", (DL_FUNC) &_patternplot_imagetodf, 6},
+    {"_patternplot_imagetodf1", (DL_FUNC) &_patternplot_imagetodf1, 6},
     {"_patternplot_imagetodf2", (DL_FUNC) &_patternplot_imagetodf2, 6},
+    {"_patternplot_imagetodf3", (DL_FUNC) &_patternplot_imagetodf3, 8},
+    {"_patternplot_imagetodf4", (DL_FUNC) &_patternplot_imagetodf4, 7},
     {NULL, NULL, 0}
 };
 

@@ -1,4 +1,3 @@
-
 // [[Rcpp::depends(RcppParallel)]]
 #include <RcppParallel.h>
 #include <Rcpp.h>
@@ -13,6 +12,7 @@ struct pointinpieworker : public Worker  {
   const RVector<double> x;
   const RVector<double> y;
   const RMatrix<double> V;
+  float r2; 
   int n_rows;
   
   // output vector to write to
@@ -20,8 +20,8 @@ struct pointinpieworker : public Worker  {
   
   // initialize from Rcpp input and output matrixes (the RMatrix class
   // can be automatically converted to from the Rcpp matrix type)
-  pointinpieworker(const NumericVector x, const NumericVector y, const NumericMatrix V,  int n_rows, IntegerVector pos)
-    : x(x), y(y), V(V), n_rows(n_rows), pos(pos) {}
+  pointinpieworker(const NumericVector x, const NumericVector y, const NumericMatrix V, float r2,  int n_rows, IntegerVector pos)
+    : x(x), y(y), V(V), r2(r2),n_rows(n_rows), pos(pos) {}
   
   // function call operator that work for the specified range (begin/end)
   void operator()(size_t begin, size_t end) {
@@ -30,26 +30,11 @@ struct pointinpieworker : public Worker  {
       float xr=x[i];
       float yr=y[i]; 
       int  cn(0);
-      int end=n_rows-1;
-      float islefts=(V(1, 0) - V(0, 0)) * (yr - V(0, 1))/(V(1, 1) - V(0, 1))- (xr -  V(0, 0));
-      float islefte=(V(end, 0) - V(end-1, 0)) * (yr - V(end-1, 1))/(V(end, 1) - V(end-1, 1))- (xr -  V(end-1, 0));  
-      int a=(islefts<0&&islefte<0)?1:2;
-      int b=(islefts>0&&islefte>0&&(V(end-1, 1)*V(1, 1)>0))?1:2;
-      int c=(a==1||b==1)?1:2;
-      int d1=((V(end-1, 1)*V(1, 1)<0)&&islefts<0&&islefte>0&&V(1, 0)>=0&&V(1, 0)+V(end-1, 0)<0)?1:2;
-      int d2=((V(end-1, 1)*V(1, 1)<0)&&islefts>0&&islefte<0&&V(1, 0)>=0&&V(1, 0)+V(end-1, 0)<0)?1:2;
-      int d3=((V(end-1, 1)*V(1, 1)<0)&&islefts<0&&islefte>0&&V(1, 0)<0&&V(1, 0)+V(end-1, 0)<0)?1:2;
-      int d4=((V(end-1, 1)*V(1, 1)<0)&&islefts>0&&islefte<0&&V(1, 0)<0&&V(1, 0)+V(end-1, 0)<0)?1:2;
-      int e=(c==1||d1==1||d2==1||d3==1||d4==1)?1:2; 
-      switch(e){
-      case 1:
-        break;
-      default:
-        if (xr*xr+yr*yr<=V(1, 0)*V(1, 0)+V(1, 1)*V(1, 1)){
+      if (xr*xr+yr*yr<=r2*r2){
           ++cn;
         }
         
-      }
+      
       
       pos[i] = cn;
     }
@@ -58,7 +43,7 @@ struct pointinpieworker : public Worker  {
 };
 
 
-IntegerVector pointinpie(NumericVector x,NumericVector y, NumericMatrix V) {
+IntegerVector pointinpie(NumericVector x,NumericVector y, NumericMatrix V, float r2) {
   
   int n_rows = V.nrow();
   
@@ -66,7 +51,7 @@ IntegerVector pointinpie(NumericVector x,NumericVector y, NumericMatrix V) {
   IntegerVector pos(x.size());
   
   // create the worker
-  pointinpieworker pointinpieworker(x, y, V, n_rows, pos);
+  pointinpieworker pointinpieworker(x, y, V, r2,  n_rows, pos);
   
   
   // call it with parallelFor
@@ -78,7 +63,7 @@ IntegerVector pointinpie(NumericVector x,NumericVector y, NumericMatrix V) {
 
 //[[Rcpp::export]]
 
-DataFrame imagetodf(NumericVector &image_matrix, NumericMatrix V,  float bottom=0, float top=1, float left = 0, float right = 1) {  
+DataFrame imagetodf4(NumericVector &image_matrix, NumericMatrix V,float r2=3,  float bottom=0, float top=1, float left = 0, float right = 1) {  
   std::vector<double> image(image_matrix.begin(),image_matrix.end()); 
   IntegerVector color_matrix_dims(image_matrix.attr("dim"));
   int num_rows = color_matrix_dims[0];
@@ -99,13 +84,13 @@ DataFrame imagetodf(NumericVector &image_matrix, NumericMatrix V,  float bottom=
   }
   
   
-  IntegerVector pos=pointinpie(X, Y,V);
+  IntegerVector pos=pointinpie(X, Y, V, r2);
   
   NumericVector  r(nrc);
   NumericVector  g(nrc);
   NumericVector  b(nrc);
   NumericVector  a(nrc, 1.0);
- 
+  
   std::copy(image.begin(), image.begin() + nrc-1, r.begin());
   std::copy(image.begin()+ nrc, image.begin()+nrc+nrc-1, g.begin());
   std::copy(image.begin()+nrc+nrc, image.begin()+nrc+nrc+nrc-1, b.begin());
@@ -116,4 +101,3 @@ DataFrame imagetodf(NumericVector &image_matrix, NumericMatrix V,  float bottom=
   
   return DataFrame::create(_["X"]= X, _["Y"]= Y, _["r"]= r, _["g"]= g, _["b"]= b, _["a"]= a, _["pos"]= pos) ;
 }
-

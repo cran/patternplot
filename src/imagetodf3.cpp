@@ -6,12 +6,14 @@ using namespace RcppParallel;
 using namespace std;
 
 
-struct pointinboxworker : public Worker  {
+struct pointinpieworker : public Worker  {
   
   // source vectors and matrix
   const RVector<double> x;
   const RVector<double> y;
   const RMatrix<double> V;
+  float r1; 
+  float r2; 
   int n_rows;
   
   // output vector to write to
@@ -19,17 +21,35 @@ struct pointinboxworker : public Worker  {
   
   // initialize from Rcpp input and output matrixes (the RMatrix class
   // can be automatically converted to from the Rcpp matrix type)
-  pointinboxworker(const NumericVector x, const NumericVector y, const NumericMatrix V,  int n_rows, IntegerVector pos)
-    : x(x), y(y), V(V), n_rows(n_rows), pos(pos) {}
+  pointinpieworker(const NumericVector x, const NumericVector y,  const NumericMatrix V, float r1, float r2 ,  int n_rows, IntegerVector pos)
+    : x(x), y(y), V(V), r1(r1), r2(r2),n_rows(n_rows), pos(pos) {}
   
   // function call operator that work for the specified range (begin/end)
   void operator()(size_t begin, size_t end) {
     for(size_t i = begin; i<end; i++){
+      
       float xr=x[i];
       float yr=y[i]; 
-      int  cn(0);    
-      if (xr>V(0, 0) && xr<V(1, 0) &&yr>V(0, 1) && yr<V(2, 1)) {
-        ++cn; 
+      int  cn(0);
+      int end=n_rows-1;
+      float islefts=(V(1, 0) - V(0, 0)) * (yr - V(0, 1))/(V(1, 1) - V(0, 1))- (xr -  V(0, 0));
+      float islefte=(V(end, 0) - V(end-1, 0)) * (yr - V(end-1, 1))/(V(end, 1) - V(end-1, 1))- (xr -  V(end-1, 0));  
+      int a=(islefts<0&&islefte<0)?1:2;
+      int b=(islefts>0&&islefte>0&&(V(end-1, 1)*V(1, 1)>0))?1:2;
+      int c=(a==1||b==1)?1:2;
+      int d1=((V(end-1, 1)*V(1, 1)<0)&&islefts<0&&islefte>0&&V(1, 0)>=0&&V(1, 0)+V(end-1, 0)<0)?1:2;
+      int d2=((V(end-1, 1)*V(1, 1)<0)&&islefts>0&&islefte<0&&V(1, 0)>=0&&V(1, 0)+V(end-1, 0)<0)?1:2;
+      int d3=((V(end-1, 1)*V(1, 1)<0)&&islefts<0&&islefte>0&&V(1, 0)<0&&V(1, 0)+V(end-1, 0)<0)?1:2;
+      int d4=((V(end-1, 1)*V(1, 1)<0)&&islefts>0&&islefte<0&&V(1, 0)<0&&V(1, 0)+V(end-1, 0)<0)?1:2;
+      int e=(c==1||d1==1||d2==1||d3==1||d4==1)?1:2; 
+      switch(e){
+      case 1:
+        break;
+      default:
+        if (xr*xr+yr*yr<=r1*r1 && xr*xr+yr*yr>=r2*r2){
+          ++cn;
+        }
+        
       }
       
       pos[i] = cn;
@@ -39,7 +59,7 @@ struct pointinboxworker : public Worker  {
 };
 
 
-IntegerVector pointinbox(NumericVector x,NumericVector y, NumericMatrix V) {
+IntegerVector pointinpie(NumericVector x,NumericVector y, NumericMatrix V, float r1, float r2) {
   
   int n_rows = V.nrow();
   
@@ -47,11 +67,11 @@ IntegerVector pointinbox(NumericVector x,NumericVector y, NumericMatrix V) {
   IntegerVector pos(x.size());
   
   // create the worker
-  pointinboxworker pointinboxworker(x, y, V, n_rows, pos);
+  pointinpieworker pointinpieworker(x, y, V, r1, r2, n_rows, pos);
   
   
   // call it with parallelFor
-  parallelFor(0, x.size(), pointinboxworker);
+  parallelFor(0, x.size(), pointinpieworker);
   
   return pos;
 }
@@ -59,7 +79,7 @@ IntegerVector pointinbox(NumericVector x,NumericVector y, NumericMatrix V) {
 
 //[[Rcpp::export]]
 
-DataFrame imagetodf2(NumericVector &image_matrix, NumericMatrix V,  float bottom=0, float top=1, float left = 0, float right = 1) {  
+DataFrame imagetodf3(NumericVector &image_matrix, NumericMatrix V,  float r1=1, float r2=0,  float bottom=0, float top=1, float left = 0, float right = 1) {  
   std::vector<double> image(image_matrix.begin(),image_matrix.end()); 
   IntegerVector color_matrix_dims(image_matrix.attr("dim"));
   int num_rows = color_matrix_dims[0];
@@ -80,7 +100,7 @@ DataFrame imagetodf2(NumericVector &image_matrix, NumericMatrix V,  float bottom
   }
   
   
-  IntegerVector pos=pointinbox(X, Y,V);
+  IntegerVector pos=pointinpie(X, Y,V, r1, r2);
   
   NumericVector  r(nrc);
   NumericVector  g(nrc);

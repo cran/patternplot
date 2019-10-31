@@ -1,5 +1,6 @@
 library(patternplot)
 library(jpeg)
+library(ggplot2)
 Tomatoes <-  readJPEG(system.file("img", "tomatoes.jpg", package="patternplot"))
 Peas <- readJPEG(system.file("img", "peas.jpg", package="patternplot"))
 Potatoes <-  readJPEG(system.file("img", "potatoes.jpg", package="patternplot"))

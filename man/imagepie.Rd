@@ -32,15 +32,16 @@ The numbers must sum up to 100.}
 A ggplot object.
 }
 \description{
-The \code{imagepie} function is a tool for creating versatile pie charts
+The \code{imagepie} function is a tool for creating versatile pie charts 
 by filling the slices with external png and jpeg images.
 }
 \details{
-\code{imagepie} function offers flexible ways in doing pie charts.
+\code{imagepie} function offers flexible ways of doing pie charts.
 }
 \examples{
 library(patternplot)
 library(jpeg)
+library(ggplot2)
 Tomatoes <-  readJPEG(system.file("img", "tomatoes.jpg", package="patternplot"))
 Peas <- readJPEG(system.file("img", "peas.jpg", package="patternplot"))
 Potatoes <-  readJPEG(system.file("img", "potatoes.jpg", package="patternplot"))

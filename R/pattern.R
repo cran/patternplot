@@ -1,183 +1,176 @@
+#' Generate a pattern in png format.
+#'
+#' The \code{pattern} function is a function for generating a pattern in png format. 
+#' @importFrom Rcpp evalCpp
+#' @useDynLib patternplot 
+#' @param type pattern types include: 'blank', 'bricks', 'vdashes', 'hdashes', 'crosshatch','dots',
+#' 'grid','hlines','nelines','nwlines','vlines','waves','Rsymbol_0' to 'Rsymbol_25', and unicode symbols.  
+#' @param density a numeric number, the density for the lines/dots of a pattern.
+#' @param pattern.line.size a numeric value, the line size for the lines/dots of a pattern.
+#' @param color color for the lines/dots of pattern.
+#' @param background.color color to be filled in the background.
+#' @param pixel a numeric value, the pixel resolution of the pattern. 
+#' @param res a numeric value, the pixel resolution of the pattern. 
+#' @return  A ggplot object.
+#'
+#' @details \code{pattern} function generates a pattern in png format.
+#'   
+#' @author Chunqiao Luo (chunqiaoluo@gmail.com)
 
-pattern<-function(type='bricks', density=8, pattern.line.size=0.5,color='black', background.color='white', pixel=0.7){
-  #background color
-  background_theme <- theme(panel.grid=element_blank(), panel.background = element_rect(fill = background.color), panel.border = element_rect(linetype = "solid", color=background.color,size=0.0001,fill = NA))
-  
-  if((density %% 2) != 0) {
-    density<-density+1
-  } 
-  
-  
-  if(type=='blank'){
-    var1<-rep(seq(1, 5, by=1), each=5)
-    var2<-rep(seq(1, 5, by=1),5)
-    df<-data.frame(var1, var2)
-    p<-ggplot(df, aes(var1, var2)) + geom_point(aes( x = var1, y = var2), size=pattern.line.size, color=background.color)+background_theme
-    
-  }
-  
-  
-  if(type=='dots'){
-    var1<-rep(seq(1, density*2, by=1), density*2)
-    var1<-sort(var1)
-    var2<-rep(seq(1, density*2, by=1), density*2)
-    df<-data.frame(var1, var2)
-    p<-ggplot(df, aes(var1, var2)) + geom_point(aes( x = var1, y = var2), shape=20,size=pattern.line.size, color=color)+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    
-  }
-  
+pattern<-function(type='bricks', density=8, pattern.line.size=10,color='black', background.color='white', pixel=5, res=30){
 
-  fullcircle<- function(center=c(0,0), npoints=400){
-    hc <- seq(0, 2*pi, length.out=npoints)
-    df <- data.frame(
-      x = center[1] + cos(hc)/2,
-      y = center[2] + sin(hc)/2
-    )
-    df
-  }
-  
-  if(type=='circles1'){
-    var1<-rep(seq(1, density*1.5, by=1), density*1.5)
-    var1<-sort(var1)
-    var2<-rep(seq(1, density*1.5, by=1), density*1.5)
-    df<-data.frame(var1, var2)
-    
-    hcircledata<-list()
-    for (i in 1:nrow(df)){
-      hcircledata[[i]] <- fullcircle(c(df[i,1], df[i,2]))
-      
-    }
-    p<-ggplot(df, aes(var1, var2)) + mapply(function(i) geom_path(data=hcircledata[[i]], aes_string(x='x',y='y'), color=color, size=pattern.line.size), i=1:nrow(df))+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    
-  }
-  
-  if (type=='circles2'){
-    var1<-rep(seq(1, density, by=1), density/2)
-    var1<-sort(var1)
-    var2<-rep(c(seq(1, density, by=2), seq(2, density, by=2)), density/2)
-    df<-data.frame(var1, var2)
-    
-    hcircledata<-list()
-    for (i in 1:nrow(df)){
-      hcircledata[[i]] <- fullcircle(c(df[i,1], df[i,2]))
-      
-    }
-    
-    
-    p<-ggplot(df, aes(var1, var2)) + mapply(function(i) geom_path(data=hcircledata[[i]], aes_string(x='x',y='y'), color=color, size=pattern.line.size), i=1:nrow(df))+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    p
-  }
-  
-  if (type=='shells'){
-    density2<-2*density
-    var1<-rep(seq(1, density2, by=1), density2/2)
-    var1<-sort(var1)
-    var2<-rep(c(seq(1, density2, by=2), seq(2, density2, by=2)), density2/2)
-    df<-data.frame(var1, var2)
-    
-    halfcircle<- function(center=c(0,0), npoints=100){
-      hc <- seq(0, pi, length.out=npoints)
-      df <- data.frame(
-        x = center[1] + cos(hc),
-        y = center[2] + sin(hc)
-      )
-      df
-    }
-    
-    hcircledata<-list()
-    for (i in 1:nrow(df)){
-      hcircledata[[i]] <- halfcircle(c(df[i,1], df[i,2]),npoints = 1000)
-      
-    }
-    
-    p<-ggplot(df, aes(var1, var2)) + mapply(function(i) geom_path(data=hcircledata[[i]], aes_string(x='x',y='y'), color=color, size=pattern.line.size), i=1:nrow(df))+coord_equal()+background_theme+scale_x_continuous(limits=range(var1)+0.01, expand = c(0, 0))+scale_y_continuous(limits=range(var2)+0.01, expand = c(0, 0))
-    p
-  }
-  
-  var1<-rep(seq(0, density, by=1), density)
-  var1<-sort(var1)
-  var2<-rep(seq(0, density, by=1), density)
-  df<-data.frame(var1, var2)
-  if(type=='hlines'){
-    p<-ggplot(df, aes(var1, var2)) + geom_hline(aes(yintercept=var2), size=pattern.line.size, color=color)+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    
-  }
-  
-  if(type=='vlines'){
-    p<-ggplot(df, aes(var1, var2)) + geom_vline(aes(xintercept=var2), size=pattern.line.size,color=color)+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    
-  }
-  
-  if (type=='grid'){
-    p<-ggplot(df, aes(var1, var2)) + geom_hline(aes(yintercept=var2), size=pattern.line.size, color=color) + geom_vline(aes(xintercept=var2), size=pattern.line.size, color=color) +coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    
-  }
-  
-  if (type=='bricks'){
-    var1<-rep(seq(1, density, by=1), density/2)
-    var1<-sort(var1)
-    var2<-rep(c(seq(1, density, by=2), seq(2, density, by=2)), density/2)
-    df<-data.frame(var1, var2)
-    p<-ggplot(df, aes(var1, var2)) + geom_hline(aes(yintercept=var2), size=pattern.line.size, color=color) + geom_segment(aes(x =var1, y = var2-1, xend =var1, yend = var2), size=pattern.line.size, color=color)+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    p
-  }
-  
-  if (type=='vdashes'){
-    var1<-rep(seq(1, density, by=1), density/2)
-    var1<-sort(var1)
-    var2<-rep(c(seq(1, density, by=2), seq(2, density, by=2)), density/2)
-    df<-data.frame(var1, var2)
-    p<-ggplot(df, aes(var1, var2))+ geom_segment(aes(x =var1, y = var2-1, xend =var1, yend = var2), size=pattern.line.size, color=color)+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    p
-  }
-  
-  if (type=='hdashes'){
-    var1<-rep(seq(1, density, by=1), density/2)
-    var1<-sort(var1)
-    var2<-rep(c(seq(1, density, by=2), seq(2, density, by=2)), density/2)
-    df<-data.frame(var1, var2)
-    p<-ggplot(df, aes(var1, var2))+ geom_segment(aes(y =var1, x = var2-1, yend =var1, xend = var2), size=pattern.line.size, color=color)+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    p
-  }
-  
-  if(type=='waves'){
-    var1<-rep(seq(0, 5*density, length=density*100), density)
-    var2<-sin(var1)
-    var3<-rep(seq(0, (density-1)*2 , by=2),length=100*density*density)
-    var3<-sort(var3)
-    var2<-var2+var3
-    df<-data.frame(var1, var2, var3)
-    
-    p<-ggplot(df, aes(var1, var2, group=var3)) + geom_path(size=pattern.line.size, color=color)+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    
-  }
-  
-  var1<-c(rep(0, density+1), rep(density*2, density+1), rep(seq(2, density*2-2, by=2),2))
-  var2<-c(rep(seq(0, density*2, by=2),2), rep(0, length=length(seq(2, density*2-2, by=2))),rep(density*2, length=length(seq(2, density*2-2, by=2)))) 
-  
-  var3<-c(1:(density*2+1),1, (density*2+1):(density+3), density:2)
-  var4<-c(1:(density+1),(density+1), (density+2):(density*2+1), 2:density, (density+2):(density*2))
-  df<-data.frame(var1, var2, var3,var4)
-  
-  if(type=='nelines'){
-    p<-ggplot(df, aes(var1, var2, group=var3)) + geom_path(size=pattern.line.size, color=color)+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    
-  }
-  
-  if(type=='nwlines'){
-    p<-ggplot(df, aes(var1, var2, group=var4)) + geom_path(size=pattern.line.size, color=color)+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    
-  }
-  
-  if(type=='crosshatch'){
-    p<-ggplot(df, aes(var1, var2)) + geom_path(aes(var1, var2, group=var3), size=pattern.line.size, color=color)+ geom_path(aes(var1, var2, group=var4), size=pattern.line.size, color=color)+coord_equal()+background_theme+scale_x_continuous(limits=range(var1), expand = c(0, 0))+scale_y_continuous(limits=range(var2), expand = c(0, 0))
-    
-  }
-  gt<-ggplotGrob(p)
-  gt<-gtable_filter(gt, "panel")
-  
-  outputlocation<-gsub('\\\\\\\\','/',tempdir())
-  ggsave(paste(outputlocation,'/',type,'.png', sep=''), gt,width = pixel, height =pixel)
-  
+outputlocation<-gsub('\\\\\\\\','/',tempdir())
+
+if(type=='blank'){
+  png(paste(outputlocation,'/', 'blank.png', sep=""), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  plot.new()
+  dev.off()
 }
+
+if (sub( "_.*", "", type)=='Unicode'){
+var1<-rep(seq(1, density, by=1), density/2)
+var1<-sort(var1)
+var2<-rep(c(seq(1, density, by=2), seq(2, density, by=2)), density/2)
+#http://www.alanwood.net/demos/wgl4.html#w25A0 #use Hex column
+
+png(paste(outputlocation,'/', "Unicode",'.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+par(mar=rep(0, 4), bg=background.color)
+plot(var1, var2, pch =gsub( "Unicode_", "", type), frame.plot=F, axes=FALSE,  cex = pattern.line.size, col=color, lwd=pattern.line.size) 
+dev.off()
+
+}
+
+
+if (type=='hdashes'){
+  var1<-rep(seq(1, density, by=1), density/2)
+  var1<-sort(var1)
+  var2<-rep(c(seq(1, density, by=2), seq(2, density, by=2)), density/2)
+  
+  png(paste(outputlocation,'/','hdashes.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  plot(var1, var2, pch = sprintf("\u2015"), frame.plot=F, axes=FALSE,  cex = pattern.line.size, col=color) 
+  dev.off()
+}
+
+
+if (type=='vdashes'){
+  var1<-rep(seq(1, density, by=1), density/2)
+  var1<-sort(var1)
+  var2<-rep(c(seq(1, density, by=2), seq(2, density, by=2)), density/2)
+  
+  png(paste(outputlocation,'/','vdashes.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  #plot(var1, var2, pch = sprintf("\u266a"), frame.plot=F, axes=FALSE,  cex = pattern.line.size, col=color) 
+  plot(var1, var2, pch = sprintf("\u2502"), frame.plot=F, axes=FALSE,  cex = pattern.line.size, col=color) 
+  dev.off()
+}
+
+if(type=='grid'){
+  png(paste(outputlocation,'/','grid.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  plot(c(0:density), c(0:density), col = rgb(red = 1, green = 0, blue = 0, alpha = 0))
+  abline(h = 0:density, v =0:density, col = color, lty = 1, lwd=pattern.line.size)
+  dev.off()
+  }
+
+
+if(type=='vlines'){
+  png(paste(outputlocation,'/','vlines.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  plot(c(0, density), c(0, density), col = rgb(red = 1, green = 0, blue = 0, alpha = 0))
+  abline(v =0:density, col = color, lty = 1, lwd = pattern.line.size)
+  dev.off()
+}
+
+if(type=='hlines'){
+  png(paste(outputlocation,'/','hlines.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  plot(c(0, density), c(0, density), col = rgb(red = 1, green = 0, blue = 0, alpha = 0))
+  abline(h =0:density, col = color, lty = 1, lwd = pattern.line.size)
+  dev.off()
+}
+
+#http://media.clemson.edu/economics/faculty/wilson/R-tutorial/graphics.html
+if(type=='waves'){
+  x <- seq(0, density*pi,length.out=1000)
+  y <- sin(x)
+
+  png(paste(outputlocation,'/','waves.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  plot(c(min(x)+pi, max(x)-pi), c(min(y)+pi, max(y+(density-1)*pi)), col = rgb(red = 1, green = 0, blue = 0, alpha = 0))
+  for (i in 0:(density)){
+    lines(x, y+i*pi, col=color, lwd = pattern.line.size)
+  }
+  dev.off()
+}
+
+if(type=='bricks'){
+  x<-rep(seq(1, density, by=1), density/2)
+  x<-sort(x)
+  y<-rep(c(seq(1, density, by=2), seq(2, density, by=2)), density/2)
+  
+  png(paste(outputlocation,'/','bricks.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  plot(c(min(x), max(x)), c(min(y), max(y)-1), col = rgb(red = 1, green = 0, blue = 0, alpha = 0))
+  segments(x, y-1, x1 = x, y1 = y,  col=color, lwd = pattern.line.size)
+  abline(h =unique(x), col = color, lty = 1, lwd = pattern.line.size)
+  
+  dev.off()
+}
+
+
+
+if(type=='nelines'){
+  png(paste(outputlocation,'/','nelines.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  plot(c(0, density), c(0, density), col = rgb(red = 1, green = 0, blue = 0, alpha = 0))
+  for (i in -density:density){
+    abline(i, 1 , col = color, lty = 1, lwd = pattern.line.size) 
+  }
+  dev.off()
+}
+
+if(type=='nwlines'){
+  png(paste(outputlocation,'/','nwlines.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  plot(c(0, density), c(0, density), col = rgb(red = 1, green = 0, blue = 0, alpha = 0))
+  for (i in seq(0, 2*density, by=1)){
+    abline(i, -1 , col = color, lty = 1, lwd = pattern.line.size) 
+  }
+  dev.off()
+}
+
+if(type=='crosshatch'){
+  png(paste(outputlocation,'/','crosshatch.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  plot(c(0, density), c(0, density), col = rgb(red = 1, green = 0, blue = 0, alpha = 0))
+  for (i in -density:density){
+    abline(i, 1 , col = color, lty = 1, lwd = pattern.line.size) 
+  }
+  for (i in seq(0, 2*density, by=1)){
+    abline(i, -1 , col = color, lty = 1, lwd = pattern.line.size) 
+  }
+  dev.off()
+}
+
+
+if(sub( "_.*", "", type)=="Rsymbol"){
+  var1<-rep(seq(1, density, by=1), density/2)
+  var1<-sort(var1)
+  var2<-rep(c(seq(1, density, by=2), seq(2, density, by=2)), density/2)
+  png(paste(outputlocation,'/',type,'.png', sep=''), width = pixel, height =pixel, units="in", res=res)
+  par(mar=rep(0, 4), bg=background.color)
+  plot(var1, var2, pch =as.numeric(gsub( "Rsymbol_", "", type)), frame.plot=F, axes=FALSE,  cex = pattern.line.size, col=color, lwd=pattern.line.size) 
+  dev.off()
+}
+}
+
+pattern(type='Unicode_\u266A', density=8, pattern.line.size=10,color='red', background.color='green', pixel=10, res=30)
+
+
+
+
+
+
 

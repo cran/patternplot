@@ -5,18 +5,19 @@
 \title{Plot a boxplot using patterns and colors to fill the boxes.}
 \usage{
 patternboxplot(data, x, y, group = NULL, xlab = "", ylab = "",
-  outlier.shape = 21, outlier.color = "black", outlier.size = 1,
-  linetype = rep("solid", ifelse(is.null(group), length(unique(x)),
-  length(unique(group)))), pattern.type, pattern.color = rep("black",
+  label.size = 3.5, linetype = rep("solid", ifelse(is.null(group),
+  length(unique(x)), length(unique(group)))), outlier.shape = 21,
+  outlier.color = "black", outlier.size = 1, pattern.type,
+  pattern.color = rep("black", ifelse(is.null(group), length(unique(x)),
+  length(unique(group)))), pattern.line.size = rep(5,
+  ifelse(is.null(group), length(x), length(unique(group)))),
+  background.color = rep("white", ifelse(is.null(group),
+  length(unique(x)), length(unique(group)))), frame.color = rep("black",
   ifelse(is.null(group), length(unique(x)), length(unique(group)))),
-  pattern.line.size = 1, background.color = rep("white",
-  ifelse(is.null(group), length(unique(x)), length(unique(group)))),
-  frame.color = rep("black", ifelse(is.null(group), length(unique(x)),
-  length(unique(group)))), frame.size = 1, pixel = 1, density = rep(7,
-  ifelse(is.null(group), length(unique(x)), length(unique(group)))),
-  legend.type = "h", legend.h = 6, legend.x.pos = 0.5,
-  legend.y.pos = 0.5, legend.pixel = 0.3, label.size = 3.5,
-  legend.ratio1 = 0.1)
+  frame.size = 1, pixel = 20, density = rep(7, ifelse(is.null(group),
+  length(unique(x)), length(unique(group)))), legend.type = "h",
+  legend.h = 6, legend.x.pos = 1.1, legend.y.pos = 0.49,
+  legend.w = 0.2, legend.pixel = 20)
 }
 \arguments{
 \item{data}{the data to be used.}
@@ -31,21 +32,23 @@ patternboxplot(data, x, y, group = NULL, xlab = "", ylab = "",
 
 \item{ylab}{a character string to give y axis label.}
 
+\item{label.size}{the font size of legend labels shown above the boxplots.}
+
+\item{linetype}{the linetype for the borders of boxplots.}
+
 \item{outlier.shape}{the shape of outlier dots.}
 
 \item{outlier.color}{the color of outlier dots.}
 
 \item{outlier.size}{the size of outlier dots.}
 
-\item{linetype}{the linetype for the borders of boxplots.}
-
 \item{pattern.type}{a vector of patterns to be filled in the boxes 
-There are 15 pattern types: 'blank', 'bricks', 'circles1','circles2', 'vdashes', 'hdashes',
-'crosshatch','dots', 'grid','hlines','nelines', 'nwlines', 'shells', 'vlines', 'waves'.}
+The pattern types include: 'blank', 'bricks', 'vdashes', 'hdashes', 'crosshatch','dots', 
+'grid','hlines','nelines', 'nwlines', 'vlines', 'waves' and more.}
 
 \item{pattern.color}{a vector of colors for the lines/dots of patterns.}
 
-\item{pattern.line.size}{a numeric value, the line size for the lines/dots of patterns.}
+\item{pattern.line.size}{a vector of numeric values, the line size for the lines/dots of patterns.}
 
 \item{background.color}{a vector of colors to be filled in the boxes.}
 
@@ -61,15 +64,13 @@ There are 15 pattern types: 'blank', 'bricks', 'circles1','circles2', 'vdashes',
 
 \item{legend.h}{a numeric value to change the height of legend boxes.}
 
-\item{legend.x.pos}{a numeric value to change the position of legend text on x axis.}
+\item{legend.x.pos}{a numeric value to change the position of legends on x axis.}
 
-\item{legend.y.pos}{a numeric value to change the position of legend text on y axis.}
+\item{legend.y.pos}{a numeric value to change the position of legends on y axis.}
 
-\item{legend.pixel}{a numeric value to change the pixel of legends.}
+\item{legend.w}{a numeric value to change the width of legends.}
 
-\item{label.size}{the font size of labels shown above the boxplots.}
-
-\item{legend.ratio1}{a numeric value to fine-tune the position of legend boxes on y axis.}
+\item{legend.pixel}{a numeric value to change pixel of legends.}
 }
 \value{
 A ggplot object.
@@ -79,24 +80,36 @@ The \code{patternboxplot} function is a tool for creating versatile boxplots
 by filling the boxplots with colors and patterns.
 }
 \details{
-\code{patternboxplot} function offers flexible ways in doing boxplots.
+\code{patternboxplot} function offers flexible ways of doing boxplots.
 }
 \examples{
 library(patternplot)
-library(jpeg)
-
-Orange<-readJPEG(system.file("img", "oranges.jpg", package="patternplot"))
-Strawberry <-readJPEG(system.file("img", "strawberries.jpg", package="patternplot"))
-Watermelon<-readJPEG(system.file("img", "watermelons.jpg", package="patternplot"))
+library(png)
+library(ggplot2)
 
 #Example 1
 data <- read.csv(system.file("extdata", "fruits.csv", package="patternplot"))
-x<-data$Fruit
+group<-data$Fruit
 y<-data$Weight
-group<-data$Store
-pattern.type<-list(Orange, Strawberry, Watermelon)
-imageboxplot(data,x, y,group=NULL,pattern.type=pattern.type, 
-             frame.color=c('orange', 'darkred', 'darkgreen'),ylab='Weight, Pounds')
+x<-data$Store
+
+pattern.type<-c('nwlines', 'blank', 'waves')
+pattern.color=c('black','black', 'black')
+background.color=c('white','gray80', 'white')
+frame.color=c('black', 'black', 'black')
+pattern.line.size<-c(6, 1,6)
+density<-c(6, 1, 8)
+patternboxplot(data,x, y,group,pattern.type=pattern.type,pattern.line.size=pattern.line.size,
+pattern.color=pattern.color,background.color=background.color,frame.color=frame.color, 
+density=density,legend.h=2,legend.x.pos=1.1,legend.y.pos=0.49,legend.pixel=10, legend.w=0.2)
+
+#Example 2
+pattern.color=c('black','white', 'grey20')
+background.color=c('gold','lightpink', 'lightgreen')
+patternboxplot(data,x, y,group=group,pattern.type=pattern.type,pattern.line.size=pattern.line.size, 
+pattern.color=pattern.color, background.color=background.color,frame.color=frame.color, 
+density=density,legend.h=2,legend.x.pos=1.1,legend.y.pos=0.49,legend.pixel=10,legend.w=0.2)
+
 }
 \seealso{
 Function \code{imageboxplot}

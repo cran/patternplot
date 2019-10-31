@@ -1,6 +1,6 @@
-#' Plot a bar chart with bars filled with png and jpeg images.
+#' Plot a stacked bar chart with bars filled with png and jpeg images.
 #'
-#' The \code{imagebar} function is a tool for creating versatile bar charts by filling the bars with external png and jpeg images. 
+#' The \code{imagebar_s} function is a tool for creating versatile stacked bar charts by filling the bars with external png and jpeg images. 
 #' @importFrom Rcpp evalCpp
 #' @useDynLib patternplot 
 #' @param data the data to be used. 
@@ -9,12 +9,10 @@
 #' @param group the variable used as the second grouping variable on x axis.
 #' @param xlab a character string to give x axis label.
 #' @param ylab a character string to give y axis label.
-#' @param label.size the font size of legend labels shown above the bars.   
-#' @param vjust the vertical distance of labels from the top border of each bar. 
-#' @param hjust the horizontal distance of labels from the top border of each bar. 
-#' @param pattern.type a list of objects returned by \code{readPNG} and \code{readJPEG} used to fill the bars. 
-#' @param frame.color the color of the borders of bars.
-#' @param frame.size a numeric value, the line size for the borders of bars.
+#' @param pattern.type a list of objects returned by \code{readPNG} and \code{readJPEG} used to fill the stacked bars. 
+#' @param label.size the font size of legend labels shown above the stacked bars.   
+#' @param frame.color the color of the borders of the stacked bars. 
+#' @param frame.size a numeric value, the line size for the borders of the stacked bars. 
 #' @param legend.type if legend.type='h', the layout of legends is horizontal;
 #'  if legend.type='v', the layout of legends is vertical. 
 #' @param legend.h a numeric value to change the height of legend boxes.
@@ -25,56 +23,20 @@
 #' @param bar.width a numeric value to change the width of the bars.  
 #' @return  A ggplot object.
 #'
-#' @details \code{imagebar} function offers flexible ways of doing bar charts.
+#' @details \code{imagebar_s} function offers flexible ways of doing stacked bar charts.
 #'   
 #' @author Chunqiao Luo (chunqiaoluo@gmail.com)
 #'
-#' @seealso Function \code{patternbar}  
+#' @seealso Function \code{patternbar_s}  
 #'
-#' @example vignettes/example-imagebar.R
+#' @example vignettes/example-imagebar_s.R
 
-imagebar<-function(data,x, y, group=NULL, xlab='', ylab='', label.size=3.5, vjust=-1, hjust=-1,
-                   pattern.type, frame.color='black',frame.size=1,
-                   legend.type='h', legend.h=6, legend.x.pos=1.1, legend.y.pos=0.49, legend.w=0.2, legend.pixel=0.3, bar.width=0.9){
 
-  if(is.null(group)){
+imagebar_s<-function(data,x, y, group, xlab='', ylab='',  pattern.type, label.size=3.5,frame.color='black',frame.size=1,
+                     legend.type='h', legend.h=6, legend.x.pos=1.1, legend.y.pos=0.49, legend.w=0.2, legend.pixel=20, bar.width=0.9){
+    location<-gsub('\\','/',tempdir(), fixed=T)
     
-    bplot <- ggplot(data, aes(x, y)) + geom_bar(stat="identity", width = bar.width)+geom_text(aes(label=y)) 
-    
-    #Box Data
-    gdata<-ggplot_build(bplot)$data[[1]]
-    gdata<-gdata[order(gdata$group),]
-    boxmatrix<-list()
-    picdata<-list()
-    picdf<-list()
-    xmax<-max(gdata[, c('xmax')])
-    xmin<-min(gdata[, c('xmin')])
-    ymax<-max(gdata[, c('ymax')])
-    ymin<-min(gdata[, c('ymin')])
-    for (i in 1:dim(gdata)[1]){
-      boxmatrix[[i]]<-matrix(c(gdata[i,"xmin"], 0,
-                               gdata[i,"xmax"], 0,
-                               gdata[i,"xmax"], gdata[i,"ymax"],
-                               gdata[i,"xmin"], gdata[i,"ymax"],
-                               gdata[i,"xmin"], 0),
-                             nrow=5, 
-                             ncol=2, byrow=T)
-      
-      pattern<-pattern.type[[i]]
-      picdata[[i]]<-imagetodf2(pattern,  boxmatrix[[i]],left =xmin, right = xmax ,bottom = ymin,top =ymax)
-      picdata[[i]] <- filter(picdata[[i]], pos==1)
-    }
-    
-    
-    #Text Data
-    ldata<-ggplot_build(bplot)$data[[2]]
-    
-    g<- ggplot()+mapply(function(i) geom_tile(data = picdata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:dim(gdata)[1])+scale_fill_identity()+geom_rect(aes(xmin=gdata[,"xmin"],xmax=gdata[,"xmax"],ymin=0,ymax=gdata[,"ymax"]), color=frame.color,size=frame.size, fill=NA)
-    g+ theme_bw()+xlab(xlab)+ylab(ylab)+ scale_x_continuous(breaks=seq(1:length(levels(x))), labels=levels(x))+geom_text(data=ldata, aes(x, y, label=label), vjust=vjust, hjust=hjust, size=label.size)
-    
-  }else{
-    
-    bplot <- ggplot(data, aes(x, y, fill=group)) + geom_bar(stat="identity", position=position_dodge(), width = bar.width) +geom_text(aes(label=y),position=position_dodge(width=0.9)) 
+    bplot <- ggplot(data, aes(x, y, fill=group)) + geom_bar(stat="identity", position="stack", width = bar.width) +geom_text(aes(label=y),position=position_dodge(width=0.9)) 
     gdata<-ggplot_build(bplot)$data[[1]]
     gdata<-gdata[order(gdata$group),]
     boxmatrix<-list()
@@ -85,12 +47,13 @@ imagebar<-function(data,x, y, group=NULL, xlab='', ylab='', label.size=3.5, vjus
     ymax<-max(gdata[, c('ymax')])
     ymin<-min(gdata[, c('ymin')])
     pattern.type2<-rep(pattern.type, time=length(unique(x)))
+
     for (i in 1:dim(gdata)[1]){
-      boxmatrix[[i]]<-matrix(c(gdata[i,"xmin"], 0,
-                               gdata[i,"xmax"], 0,
+      boxmatrix[[i]]<-matrix(c(gdata[i,"xmin"], gdata[i,"ymin"],
+                               gdata[i,"xmax"], gdata[i,"ymin"],
                                gdata[i,"xmax"], gdata[i,"ymax"],
                                gdata[i,"xmin"], gdata[i,"ymax"],
-                               gdata[i,"xmin"], 0),
+                               gdata[i,"xmin"], gdata[i,"ymin"]),
                              nrow=5, 
                              ncol=2, byrow=T)
       pattern<-pattern.type2[[i]]
@@ -116,6 +79,7 @@ imagebar<-function(data,x, y, group=NULL, xlab='', ylab='', label.size=3.5, vjus
                                  legend.x[1],legend.y[i]),
                                nrow=5, 
                                ncol=2, byrow=T)
+        
         pattern<-pattern.type[[i]]
         pattern = pattern[seq(1, nrow(pattern), legend.pixel), seq(1, ncol(pattern), legend.pixel), ]
         legenddata[[i]]<-imagetodf2(pattern,  legendbox[[i]],left =legendbox[[i]][1, 1], right = legendbox[[i]][2, 1] ,bottom = legendbox[[i]][1, 2],top =legendbox[[i]][3, 2])
@@ -156,12 +120,10 @@ imagebar<-function(data,x, y, group=NULL, xlab='', ylab='', label.size=3.5, vjus
       legend.label.x<-legend.x.s+legend.x.pos*legend.w
     }
     
-    #Text Data
-    ldata<-ggplot_build(bplot)$data[[2]]
-    
+   
     X<-Y<-r<-g<-b<-a<-pos<-label<-NULL
     g<- ggplot()+ mapply(function(i) geom_tile(data = picdata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:dim(gdata)[1])+scale_fill_identity()+geom_rect(aes(xmin=gdata[,"xmin"],xmax=gdata[,"xmax"],ymin=0,ymax=gdata[,"ymax"]), color=frame.color,size=frame.size, fill=NA)
-    g<-g+ theme_bw()+xlab(xlab)+ylab(ylab)+ scale_x_continuous(breaks=seq(1:length(levels(x))), labels=levels(x))+geom_text(data=ldata, aes(x, y, label=label), vjust=vjust,hjust=hjust, size=label.size)
-    g+ mapply(function(i) geom_tile(data = legenddata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:length(pattern.type))+geom_rect(aes(xmin=legend.frame.xmin,xmax=legend.frame.xmax,ymin=legend.frame.ymin,ymax=legend.frame.ymax), color=frame.color,size=frame.size, fill=NA)+geom_text(aes(x=legend.label.x, y=legend.label.y, label=levels(group), hjust=0, vjust=0), size=label.size)
+    g<-g+ theme_bw()+xlab(xlab)+ylab(ylab)+ scale_x_continuous(breaks=seq(1:length(levels(x))), labels=levels(x))
+    g+ mapply(function(i) geom_tile(data = legenddata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:length(pattern.type))+geom_text(aes(x=legend.label.x, y=legend.label.y, label=levels(group), hjust=0, vjust=0), size=label.size)+geom_rect(aes(xmin=legend.frame.xmin,xmax=legend.frame.xmax,ymin=legend.frame.ymin,ymax=legend.frame.ymax), color=frame.color,size=frame.size, fill=NA)
   }
-  }
+  

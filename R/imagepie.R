@@ -17,7 +17,7 @@
 #' 
 #' @return  A ggplot object.
 #'
-#' @details \code{imagepie} function offers flexible ways in doing pie charts.
+#' @details \code{imagepie} function offers flexible ways of doing pie charts.
 #'   
 #' @author Chunqiao Luo (chunqiaoluo@gmail.com)
 #'
@@ -33,7 +33,7 @@ imagepie<-function(group,pct,label,label.size=4,label.color='black', label.dista
   end<-0.02*cumsum(pct)
   
   #label position
-  pielabel<- labelpos(r=5, start=start, end=end, distance=label.distance)
+  pielabel<- labelposition(r=5, start=start, end=end, distance=label.distance)
   
   #slice position
   piedata<-list()
@@ -42,7 +42,7 @@ imagepie<-function(group,pct,label,label.size=4,label.color='black', label.dista
 
   for (i in 1:length(group)){
   piedata[[i]]<-slicepos(r=5,start=start[i], end=end[i])
-  picdata[[i]]<-imagetodf(pattern.type[[i]], as.matrix(piedata[[i]]),left = min(piedata[[i]]$x), right = max(piedata[[i]]$x),bottom = min(piedata[[i]]$y),top = max(piedata[[i]]$y))
+  picdata[[i]]<-imagetodf1(pattern.type[[i]], as.matrix(piedata[[i]]),left = min(piedata[[i]]$x), right = max(piedata[[i]]$x),bottom = min(piedata[[i]]$y),top = max(piedata[[i]]$y))
   picdf[[i]]<-filter(picdata[[i]], pos==1)
   picdata[[i]]<-NULL
   }
@@ -57,6 +57,6 @@ imagepie<-function(group,pct,label,label.size=4,label.color='black', label.dista
            axis.ticks = element_blank()
     )
   
-  ggplot() + mapply(function(i) geom_raster(data = picdf[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:length(group))+scale_fill_identity()+ mapply(function(i) geom_polygon(data=piedata[[i]], aes(x=x,y=y), color=frame.color, size=frame.size, fill=NA),1:length(group)) +coord_equal() +annotate("text", label =label, x = pielabel$x, y = pielabel$y, size = label.size, colour = label.color)+scale_x_continuous(limits=c(-7.0, 7.0))+scale_y_continuous(limits=c(-7.0, 7.0))+blank_theme
+  ggplot() + mapply(function(i) geom_tile(data = picdf[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:length(group))+scale_fill_identity()+ mapply(function(i) geom_polygon(data=piedata[[i]], aes(x=x,y=y), color=frame.color, size=frame.size, fill=NA),1:length(group)) +coord_equal() +annotate("text", label =label, x = pielabel$x, y = pielabel$y, size = label.size, colour = label.color)+scale_x_continuous(limits=c(-7.0, 7.0))+scale_y_continuous(limits=c(-7.0, 7.0))+blank_theme
 }
 

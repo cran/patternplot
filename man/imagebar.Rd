@@ -5,9 +5,10 @@
 \title{Plot a bar chart with bars filled with png and jpeg images.}
 \usage{
 imagebar(data, x, y, group = NULL, xlab = "", ylab = "",
-  label.size = 3.5, vjust = -1, pattern.type, frame.color = "black",
-  frame.size = 1, legend.type = "h", legend.h = 6, legend.y.pos = 0.5,
-  legend.pixel = 5)
+  label.size = 3.5, vjust = -1, hjust = -1, pattern.type,
+  frame.color = "black", frame.size = 1, legend.type = "h",
+  legend.h = 6, legend.x.pos = 1.1, legend.y.pos = 0.49,
+  legend.w = 0.2, legend.pixel = 0.3, bar.width = 0.9)
 }
 \arguments{
 \item{data}{the data to be used.}
@@ -22,9 +23,11 @@ imagebar(data, x, y, group = NULL, xlab = "", ylab = "",
 
 \item{ylab}{a character string to give y axis label.}
 
-\item{label.size}{the font size of labels shown above the bars.}
+\item{label.size}{the font size of legend labels shown above the bars.}
 
-\item{vjust}{the distance of labels from the top border of each bar.}
+\item{vjust}{the vertical distance of labels from the top border of each bar.}
+
+\item{hjust}{the horizontal distance of labels from the top border of each bar.}
 
 \item{pattern.type}{a list of objects returned by \code{readPNG} and \code{readJPEG} used to fill the bars.}
 
@@ -37,9 +40,15 @@ if legend.type='v', the layout of legends is vertical.}
 
 \item{legend.h}{a numeric value to change the height of legend boxes.}
 
+\item{legend.x.pos}{a numeric value to change the position of legends on x axis.}
+
 \item{legend.y.pos}{a numeric value to change the position of legends on y axis.}
 
-\item{legend.pixel}{a numeric value to change the pixel of legends.}
+\item{legend.w}{a numeric value to change the width of legends.}
+
+\item{legend.pixel}{a numeric value to change the pixel of legend boxes}
+
+\item{bar.width}{a numeric value to change the width of the bars.}
 }
 \value{
 A ggplot object.
@@ -48,13 +57,13 @@ A ggplot object.
 The \code{imagebar} function is a tool for creating versatile bar charts by filling the bars with external png and jpeg images.
 }
 \details{
-\code{imagebar} function offers flexible ways in doing bar charts.
+\code{imagebar} function offers flexible ways of doing bar charts.
 }
 \examples{
 library(patternplot)
 library(jpeg)
+library(ggplot2)
 
-#http://all-free-download.com/free-vector/modern-seamless-pattern.html
 childcare<-readJPEG(system.file("img", "childcare.jpg", package="patternplot"))
 food<-readJPEG(system.file("img", "food.jpg", package="patternplot"))
 housing <-readJPEG(system.file("img", "housing.jpg", package="patternplot"))
@@ -65,10 +74,17 @@ data<-data[which(data$Location=='City 1'),]
 x<-factor(data$Type, c('Housing', 'Food',  'Childcare'))
 y<-data$Amount
 pattern.type<-list(housing, food, childcare)
-imagebar(data,x, y,group=NULL,pattern.type=pattern.type,
-         frame.color=c('darkred', 'darkgreen', 'orange'),
-         ylab='Monthly Expenses, Dollars')
+imagebar(data,x, y,group=NULL,pattern.type=pattern.type,vjust=-1, hjust=0.5,
+frame.color='black',ylab='Monthly Expenses, Dollars')+ggtitle('(A) Bar Chart with Images')
 
+#Example 2
+data <- read.csv(system.file("extdata", "monthlyexp.csv", package="patternplot"))
+group<-factor(data$Type, c('Housing', 'Food',  'Childcare'))
+y<-data$Amount
+x<-factor(data$Location, c('City 1', ' City 1'))
+pattern.type<-list(housing, food, childcare)
+g<-imagebar(data,x,y,group,pattern.type=pattern.type,vjust=-1,hjust=0.5,frame.color='black',
+ylab='Monthly Expenses, Dollars')+ggtitle('(B) Image Bar Chart with Two Grouping Variables')
 }
 \seealso{
 Function \code{patternbar}

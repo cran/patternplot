@@ -4,7 +4,7 @@ library(Cairo)
 opts_chunk$set(out.extra='style="display:block; margin: auto"', fig.align="center", dev='CairoPNG')
 options(warn=-1)
 
-## ----e1------------------------------------------------------------------
+## ----e1, fig.height = 6, fig.width = 10----------------------------------
 library(patternplot)
 library(png)
 library(ggplot2)
@@ -13,21 +13,21 @@ data <- read.csv(system.file("extdata", "vegetables.csv", package="patternplot")
 pattern.type<-c('hdashes', 'vdashes', 'bricks')
 pie1<-patternpie(group=data$group,pct=data$pct,label=data$label, 
                  label.size=4, label.color='black',label.distance=1.3,pattern.type=pattern.type,
-           pattern.line.size=c(5, 5, 2), frame.color='black',frame.size=1.5, pixel=11, density=c(12, 12, 10))
+           pattern.line.size=c(10, 10, 2), frame.color='black',frame.size=1.5, pixel=12, density=c(8, 8, 10))
 pie1<-pie1+ggtitle('(A) Black and White with Patterns')
 #Example 2
 pattern.color<-c('red3','green3', 'white' )
 background.color<-c('dodgerblue', 'lightpink', 'orange')
 pie2<-patternpie(group=data$group,pct=data$pct,label=data$label, label.distance=1.3, pattern.type=pattern.type,
            pattern.color=pattern.color,background.color=background.color, 
-           pattern.line.size=c(5, 5, 2), frame.color='grey40',frame.size=1.5, pixel=11, density=c(12, 12, 10))
+           pattern.line.size=c(10, 10, 2), frame.color='grey40',frame.size=1.5, pixel=12, density=c(8, 8, 10))
 pie2<-pie2+ggtitle('(B) Colors with Patterns')
 
 library(gridExtra)
 grid.arrange(pie1,pie2,  nrow = 1)
 
 
-## ----e2------------------------------------------------------------------
+## ----e2, fig.height = 6, fig.width = 6-----------------------------------
 library(patternplot)
 library(ggplot2)
 library(jpeg)
@@ -42,7 +42,7 @@ imagepie(group=data$group,pct=data$pct,label=data$label,pattern.type=pattern.typ
          label.distance=1.3,frame.color='burlywood4', frame.size=0.8, label.size=6,
          label.color='forestgreen')+ggtitle('Pie Chart with Images')
 
-## ----e3------------------------------------------------------------------
+## ----e3, fig.height = 6, fig.width = 6-----------------------------------
 library(patternplot)
 library(png)
 library(ggplot2)
@@ -55,15 +55,15 @@ pattern.type.inner<-"blank"
 pattern.color1<-rep("white", 8)
 background.color1<-c("darkgreen", "darkcyan", "chocolate", "cadetblue1", "darkorchid", "yellowgreen", "hotpink", "lightslateblue")
 density1<-rep(12, length(group1))
-pattern.line.size1=c(12, 1, 10, 1, 20, 1, 12, 1)
+pattern.line.size1=c(9, 1, 6, 1, 10, 1, 6, 1)
 
-g<-patternring1(group1, pct1, label1, label.size1=4,label.color1='black', label.distance1=1.45, pattern.type1, pattern.color1, pattern.line.size1,background.color1, frame.color='black',frame.size=1.2, density1, pixel=18,
+g<-patternring1(group1, pct1, label1, label.size1=4,label.color1='black', label.distance1=1.35, pattern.type1, pattern.color1, pattern.line.size1,background.color1, frame.color='black',frame.size=1.2, density1, pixel=14,
                 pattern.type.inner="blank",pattern.color.inner="white", pattern.line.size.inner=1,  background.color.inner="white", pixel.inner=10, density.inner=1, r1=3, r2=4)
 g<-g+annotate(geom="text", x=0, y=0, label="2019 Number of Cases \n N=1000",color="black", size=4)+scale_x_continuous(limits=c(-7, 7))+scale_y_continuous(limits=c(-7, 7))
-suppressWarnings(print(g))
+g
 
 
-## ----e4------------------------------------------------------------------
+## ----e4, fig.height = 6, fig.width = 6-----------------------------------
 #Example 1
 library(patternplot)
 library(png)
@@ -94,12 +94,12 @@ label1<-paste(group1, " \n ", pct1, "%", sep="")
 pattern.type1<-list(NewEngland, GreatLakes,Plains,  RockyMountain, FarWest,Southwest, Southeast,  Mideast)
 pattern.type.inner<-readPNG(system.file("img", "USmap.png", package="patternplot"))
 
-g<-imagering1(group1, pct1,  pattern.type1, pattern.type.inner, frame.color='black',frame.size=1.2, r1=3, r2=4,label1, label.size1=3,label.color1='black', label.distance1=1.3)
-g<-g+annotate(geom="text", x=0, y=-2, label="2019 Number of Cases \n N=1000",color="black", size=3)+scale_x_continuous(limits=c(-6, 6))+scale_y_continuous(limits=c(-6, 6))
-suppressWarnings(print(g))
+g<-imagering1(group1, pct1,  pattern.type1, pattern.type.inner, frame.color='black',frame.size=1.5, r1=3, r2=4,label1, label.size1=4,label.color1='black', label.distance1=1.3)
+g<-g+annotate(geom="text", x=0, y=-2, label="2019 Number of Cases \n N=1000",color="black", size=4)+scale_x_continuous(limits=c(-6, 6))+scale_y_continuous(limits=c(-6, 6))
+g
 
 
-## ----e5------------------------------------------------------------------
+## ----e5, fig.height = 6, fig.width = 10----------------------------------
 library(patternplot)
 library(png)
 library(ggplot2)
@@ -124,24 +124,26 @@ background.color2<-c("seagreen", "deepskyblue")
 density1<-rep(10, length(group1))
 density2<-rep(10, length(group2))
 
-pattern.line.size1=rep(10, length(group1))
-pattern.line.size2=rep(8, length(group2))
+pattern.line.size1=rep(5, length(group1))
+pattern.line.size2=rep(2, length(group2))
 pattern.line.size.inner=1
 
 #Example 1: Two rings
 g<-patternrings2(group1, group2, pct1,pct2, label1, label2, label.size1=3, label.size2=3.5, label.color1='black', label.color2='black', label.distance1=0.75, label.distance2=1.4, pattern.type1, pattern.type2,  pattern.color1,pattern.color2,
-pattern.line.size1, pattern.line.size2, background.color1, background.color2,density1=rep(10, length(group1)), density2=rep(15, length(group2)),pixel=18, pattern.type.inner, pattern.color.inner="black",pattern.line.size.inner,  background.color.inner="white",  pixel.inner=10,  density.inner=5, frame.color='black',frame.size=1,r1=2.45, r2=4.25, r3=5)
+pattern.line.size1, pattern.line.size2, background.color1, background.color2,density1=rep(10, length(group1)), density2=rep(15, length(group2)),pixel=10, pattern.type.inner, pattern.color.inner="black",pattern.line.size.inner,  background.color.inner="white",  pixel.inner=6,  density.inner=5, frame.color='black',frame.size=1.5,r1=2.45, r2=4.25, r3=5)
 g1<-g+annotate(geom="text", x=0, y=0, label="Earth's Energy",color="black", size=5)+scale_x_continuous(limits=c(-6, 6))+scale_y_continuous(limits=c(-6, 6))+ggtitle("(A) Two Rings")
-suppressWarnings(print(g1))
 
 #Example 2: Pie in a ring
 g<-patternrings2(group1, group2, pct1,pct2, label1, label2, label.size1=3, label.size2=3.5, label.color1='black', label.color2='black', label.distance1=0.7, label.distance2=1.4, pattern.type1, pattern.type2,  pattern.color1,pattern.color2,
-pattern.line.size1, pattern.line.size2, background.color1, background.color2,density1=rep(10, length(group1)), density2=rep(15, length(group2)),pixel=18, pattern.type.inner, pattern.color.inner="black",pattern.line.size.inner,  background.color.inner="white",  pixel.inner=2,  density.inner=5, frame.color='black',frame.size=1, r1=0.005, r2=4, r3=4.75)
+pattern.line.size1, pattern.line.size2, background.color1, background.color2,density1=rep(10, length(group1)), density2=rep(15, length(group2)),pixel=10, pattern.type.inner, pattern.color.inner="black",pattern.line.size.inner,  background.color.inner="white",  pixel.inner=2,  density.inner=5, frame.color='black',frame.size=1.5, r1=0.005, r2=4, r3=4.75)
 g2<-g+scale_x_continuous(limits=c(-6, 6))+scale_y_continuous(limits=c(-6, 6))+ggtitle("(B) Pie in a Ring")
-suppressWarnings(print(g2))
 
 
-## ----e6------------------------------------------------------------------
+library(gridExtra)
+grid.arrange(g1,g2,  nrow = 1)
+
+
+## ----e6, fig.height = 6, fig.width = 6-----------------------------------
 #Example 1
 library(patternplot)
 library(png)
@@ -177,7 +179,7 @@ pattern.type.inner<-readPNG(system.file("img", "earth.png", package="patternplot
 
 g<-imagerings2(group1, group2,pct1,pct2, label1, label2, label.size1=3, label.size2=3.5, label.color1='black', label.color2='black', label.distance1=0.7, label.distance2=1.3, pattern.type1, pattern.type2, pattern.type.inner, frame.color='skyblue',frame.size=1.5, r1=2.2, r2=4.2, r3=5)
 g<-g+scale_x_continuous(limits=c(-7, 7))+scale_y_continuous(limits=c(-7, 7))
-suppressWarnings(print(g))
+g
 
 
 ## ----e7, fig.width=8, fig.height=6---------------------------------------
@@ -216,12 +218,12 @@ pattern.type<-c( 'Rsymbol_16', 'blank','hdashes')
 pattern.color=c('yellow', 'chartreuse4',  'pink')
 background.color=c('grey', 'chartreuse3',  'bisque')
 barp3<-patternbar(data,x, y,group,ylab='Monthly Expenses, Dollars', pattern.type=pattern.type, 
-                  pattern.color=pattern.color,background.color=background.color, pattern.line.size=c(10, 10,8),
-                  frame.size=1,frame.color='black',pixel=20, density=c(20, 10, 20), legend.type='h', 
-                  legend.h=12, legend.y.pos=0.49, vjust=-1, hjust=0.5,legend.pixel=10, legend.w=0.2,legend.x.pos=1.1) +scale_y_continuous(limits = c(0, 3100))+ggtitle('(C) Bar Chart with Two Grouping Variables')
+                  pattern.color=pattern.color,background.color=background.color, pattern.line.size=c(8, 10,7),
+                  frame.size=1,frame.color='black',pixel=21, density=c(18, 10, 14), legend.type='h', 
+                  legend.h=12, legend.y.pos=0.49, vjust=-1, hjust=0.5,legend.pixel=7, legend.w=0.25,legend.x.pos=1.1) +scale_y_continuous(limits = c(0, 3100))+ggtitle('(C) Bar Chart with Two Grouping Variables')
 barp3
 
-## ----e8, fig.width=7, fig.height=6---------------------------------------
+## ----e8, fig.width=6, fig.height=6---------------------------------------
 #Example 1
 library(patternplot)
 library(png)
@@ -231,7 +233,7 @@ x<-data$Location
 y<-data$Amount
 group<-data$Type
 
-patternbar_s(data,x, y, group,xlab='', ylab='Monthly Expenses, Dollar', label.size=3.5,pattern.type=c( 'Rsymbol_16', 'blank','hdashes'), pattern.line.size=c(10, 10, 8),frame.size=1,pattern.color=c('yellow', 'chartreuse4',  'pink'),background.color=c('grey', 'chartreuse3',  'bisque'), pixel=20, density=c(20, 10, 20),frame.color='black', legend.type='h', legend.h=12, legend.y.pos=0.49, legend.pixel=10, legend.w=0.2, legend.x.pos=1.1, bar.width=0.75)+scale_y_continuous(limits = c(0, 6800))+ggtitle('Stacked Bar Chart')
+patternbar_s(data,x, y, group,xlab='', ylab='Monthly Expenses, Dollar', label.size=3,pattern.type=c( 'Rsymbol_16', 'blank','hdashes'), pattern.line.size=c(5, 10, 10),frame.size=1,pattern.color=c('yellow', 'chartreuse4',  'pink'),background.color=c('grey', 'chartreuse3',  'bisque'), pixel=16, density=c(18, 10, 10),frame.color='black', legend.type='h', legend.h=12, legend.y.pos=0.49, legend.pixel=6, legend.w=0.275, legend.x.pos=1.05, bar.width=0.8)+scale_y_continuous(limits = c(0, 6800))+ggtitle('Stacked Bar Chart')
 
 ## ----e9, fig.width=6, fig.height=6---------------------------------------
 library(patternplot)
@@ -295,14 +297,14 @@ pattern.line.size<-c(6, 1,6)
 density<-c(6, 1, 8)
 box1<-patternboxplot(data,x, y,group,pattern.type=pattern.type,pattern.line.size=pattern.line.size, label.size=3,
                pattern.color=pattern.color, background.color=background.color,frame.color=frame.color, 
-               density=density,  legend.h=2, legend.x.pos=1.05, legend.y.pos=0.499, legend.pixel=10, legend.w=0.18)+ggtitle('(A) Boxplot with Black and White Patterns')
+               density=density,  legend.h=2, legend.x.pos=1.075, legend.y.pos=0.499, legend.pixel=10, legend.w=0.18)+ggtitle('(A) Boxplot with Black and White Patterns')
 
 #Example 2
 pattern.color=c('black','white', 'grey20')
 background.color=c('gold','lightpink', 'lightgreen')
 box2<-patternboxplot(data,x, y,group=group,pattern.type=pattern.type,pattern.line.size=pattern.line.size, label.size=3,
                pattern.color=pattern.color, background.color=background.color,
-               frame.color=frame.color, density=density,  legend.h=2, legend.x.pos=1.05, legend.y.pos=0.499, legend.pixel=10, legend.w=0.18)+ggtitle('(B) Boxplot with Colors and Patterns')
+               frame.color=frame.color, density=density,  legend.h=2, legend.x.pos=1.075, legend.y.pos=0.499, legend.pixel=10, legend.w=0.18)+ggtitle('(B) Boxplot with Colors and Patterns')
 
 library(gridExtra)
 grid.arrange(box1,box2,  nrow = 1)
@@ -394,10 +396,10 @@ data <- data.frame(Type=c('Female', 'Male'), Amount=c(50, 40))
 x<-data$Type
 y<-data$Amount
 pattern.type<-c('Unicode_\u2640', 'Unicode_\u2642')
-pattern.color<-c('pink','deepskyblue')
+pattern.color<-c('violet','deepskyblue')
 background.color=c('seashell','seashell')
-density<-c(12, 12)
-g2<-patternbar(data,x, y,group=NULL,ylab='Number of People', pattern.type=pattern.type,pattern.color=pattern.color, background.color=background.color,pattern.line.size=c(12, 12), density=density, vjust=-1, hjust=0.5, bar.width =0.5)+scale_y_continuous(limits = c(0, 60))+ggtitle('(A) Bar Chart with Gender Symbols')
+density<-c(10, 10)
+g2<-patternbar(data,x, y,group=NULL,ylab='Number of People', pattern.type=pattern.type,pattern.color=pattern.color, background.color=background.color,pattern.line.size=c(14, 14), density=density, pixel=18, vjust=-1, hjust=0.5, bar.width =0.5)+scale_y_continuous(limits = c(0, 60))+ggtitle('(A) Bar Chart with Gender Symbols')
 
 
 library(gridExtra)

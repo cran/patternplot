@@ -6,7 +6,7 @@ using namespace RcppParallel;
 using namespace std;
 
 
-struct pointinpieworker : public Worker  {
+struct pointinpiefourworker : public Worker  {
   
   // source vectors and matrix
   const RVector<double> x;
@@ -20,7 +20,7 @@ struct pointinpieworker : public Worker  {
   
   // initialize from Rcpp input and output matrixes (the RMatrix class
   // can be automatically converted to from the Rcpp matrix type)
-  pointinpieworker(const NumericVector x, const NumericVector y, const NumericMatrix V, float r2,  int n_rows, IntegerVector pos)
+  pointinpiefourworker(const NumericVector x, const NumericVector y, const NumericMatrix V, float r2,  int n_rows, IntegerVector pos)
     : x(x), y(y), V(V), r2(r2),n_rows(n_rows), pos(pos) {}
   
   // function call operator that work for the specified range (begin/end)
@@ -43,7 +43,7 @@ struct pointinpieworker : public Worker  {
 };
 
 
-IntegerVector pointinpie(NumericVector x,NumericVector y, NumericMatrix V, float r2) {
+IntegerVector pointinpiefour(NumericVector x,NumericVector y, NumericMatrix V, float r2) {
   
   int n_rows = V.nrow();
   
@@ -51,11 +51,11 @@ IntegerVector pointinpie(NumericVector x,NumericVector y, NumericMatrix V, float
   IntegerVector pos(x.size());
   
   // create the worker
-  pointinpieworker pointinpieworker(x, y, V, r2,  n_rows, pos);
+  pointinpiefourworker pointinpiefourworker(x, y, V, r2,  n_rows, pos);
   
   
   // call it with parallelFor
-  parallelFor(0, x.size(), pointinpieworker);
+  parallelFor(0, x.size(), pointinpiefourworker);
   
   return pos;
 }
@@ -84,7 +84,7 @@ DataFrame imagetodf4(NumericVector &image_matrix, NumericMatrix V,float r2=3,  f
   }
   
   
-  IntegerVector pos=pointinpie(X, Y, V, r2);
+  IntegerVector pos=pointinpiefour(X, Y, V, r2);
   
   NumericVector  r(nrc);
   NumericVector  g(nrc);

@@ -6,7 +6,7 @@ using namespace RcppParallel;
 using namespace std;
 
 
-struct pointinpieworker : public Worker  {
+struct pointinpieoneworker : public Worker  {
   
   // source vectors and matrix
   const RVector<double> x;
@@ -19,7 +19,7 @@ struct pointinpieworker : public Worker  {
   
   // initialize from Rcpp input and output matrixes (the RMatrix class
   // can be automatically converted to from the Rcpp matrix type)
-  pointinpieworker(const NumericVector x, const NumericVector y, const NumericMatrix V,  int n_rows, IntegerVector pos)
+  pointinpieoneworker(const NumericVector x, const NumericVector y, const NumericMatrix V,  int n_rows, IntegerVector pos)
     : x(x), y(y), V(V), n_rows(n_rows), pos(pos) {}
   
   // function call operator that work for the specified range (begin/end)
@@ -57,7 +57,7 @@ struct pointinpieworker : public Worker  {
 };
 
 
-IntegerVector pointinpie(NumericVector x,NumericVector y, NumericMatrix V) {
+IntegerVector pointinpieone(NumericVector x,NumericVector y, NumericMatrix V) {
   
   int n_rows = V.nrow();
   
@@ -65,11 +65,11 @@ IntegerVector pointinpie(NumericVector x,NumericVector y, NumericMatrix V) {
   IntegerVector pos(x.size());
   
   // create the worker
-  pointinpieworker pointinpieworker(x, y, V, n_rows, pos);
+  pointinpieoneworker pointinpieoneworker(x, y, V, n_rows, pos);
   
   
   // call it with parallelFor
-  parallelFor(0, x.size(), pointinpieworker);
+  parallelFor(0, x.size(), pointinpieoneworker);
   
   return pos;
 }
@@ -98,7 +98,7 @@ DataFrame imagetodf1(NumericVector &image_matrix, NumericMatrix V,  float bottom
   }
   
   
-  IntegerVector pos=pointinpie(X, Y,V);
+  IntegerVector pos=pointinpieone(X, Y,V);
   
   NumericVector  r(nrc);
   NumericVector  g(nrc);

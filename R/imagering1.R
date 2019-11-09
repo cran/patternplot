@@ -28,7 +28,7 @@
 #'
 #' @example vignettes/example-imagering1.R
 
-imagering1<-function(group1, pct1, pattern.type1, pattern.type.inner, frame.color='black',frame.size=1,label1, label.size1=4,label.color1='black', label.distance1=1.2, r1=3, r2=4){
+imagering1<-function(group1, pct1, pattern.type1, pattern.type.inner, frame.color='black',frame.size=1,label1, label.size1=4,label.color1='black', label.distance1=1.2, r1, r2){
   
   #pie from data
   start1<-0.02*c(0, head(cumsum(pct1), -1))
@@ -65,7 +65,7 @@ imagering1<-function(group1, pct1, pattern.type1, pattern.type.inner, frame.colo
                                        panel.grid=element_blank(),
                                        axis.ticks = element_blank()
   )
-  ggplot() + mapply(function(i) suppressWarnings(geom_raster(data = picdf1[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a)))), i=1:length(group1))+suppressWarnings(geom_raster(data = innercdata, aes(x = X, y = Y, fill = rgb(r,g, b,a))))+scale_fill_identity()+mapply(function(i) geom_polygon(data=imagedata1[[i]], aes(x=x,y=y), color=frame.color, size=frame.size, fill=NA), i=1:length(group1)) +coord_equal()+blank_theme +annotate("text", label =label1, x = ringlabel1$x, y = ringlabel1$y, size = label.size1, colour = label.color1)
+  ggplot() + mapply(function(i) geom_tile(data = picdf1[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))), i=1:length(group1))+geom_tile(data = innercdata, aes(x = X, y = Y, fill = rgb(r,g, b,a)))+scale_fill_identity()+mapply(function(i) geom_polygon(data=imagedata1[[i]], aes(x=x,y=y), color=frame.color, size=frame.size, fill=NA), i=1:length(group1)) +coord_equal()+blank_theme +annotate("text", label =label1, x = ringlabel1$x, y = ringlabel1$y, size = label.size1, colour = label.color1)
 }
 
 

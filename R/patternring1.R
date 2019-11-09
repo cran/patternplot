@@ -93,7 +93,7 @@ patternring1<-function(group1, pct1, label1, label.size1=4,label.color1='black',
                                        panel.grid=element_blank(),
                                        axis.ticks = element_blank()
   )
-  ggplot() + mapply(function(i) geom_raster(data = picdf1[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))), i=1:length(group1))+geom_raster(data = innercdata, aes(x = X, y = Y, fill = rgb(r,g, b,a)))+scale_fill_identity()+mapply(function(i) geom_polygon(data=ringdata1[[i]], aes(x=x,y=y), color=frame.color, size=frame.size, fill=NA), i=1:length(group1)) +coord_equal()+blank_theme +annotate("text", label =label1, x = pielabel$x, y = pielabel$y, size = label.size1, colour = label.color1) 
+  ggplot() + mapply(function(i) geom_tile(data = picdf1[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))), i=1:length(group1))+geom_tile(data = innercdata, aes(x = X, y = Y, fill = rgb(r,g, b,a)))+scale_fill_identity()+mapply(function(i) geom_polygon(data=ringdata1[[i]], aes(x=x,y=y), color=frame.color, size=frame.size, fill=NA), i=1:length(group1)) +coord_equal()+blank_theme +annotate("text", label =label1, x = pielabel$x, y = pielabel$y, size = label.size1, colour = label.color1) 
 }
 
 

@@ -42,7 +42,7 @@ imagepie(group=data$group,pct=data$pct,label=data$label,pattern.type=pattern.typ
          label.distance=1.3,frame.color='burlywood4', frame.size=0.8, label.size=6,
          label.color='forestgreen')+ggtitle('Pie Chart with Images')
 
-## ----e3, fig.height = 6, fig.width = 6-----------------------------------
+## ----e3, fig.height = 6.5, fig.width = 6.5-------------------------------
 library(patternplot)
 library(png)
 library(ggplot2)
@@ -54,11 +54,11 @@ pattern.type1<-c("hdashes", "blank", "grid", "blank", "hlines", "blank", "waves"
 pattern.type.inner<-"blank"
 pattern.color1<-rep("white", 8)
 background.color1<-c("darkgreen", "darkcyan", "chocolate", "cadetblue1", "darkorchid", "yellowgreen", "hotpink", "lightslateblue")
-density1<-rep(12, length(group1))
-pattern.line.size1=c(9, 1, 6, 1, 10, 1, 6, 1)
+density1<-rep(11.5, length(group1))
+pattern.line.size1=c(10, 1, 6, 1, 10, 1, 6, 1)
 
-g<-patternring1(group1, pct1, label1, label.size1=4,label.color1='black', label.distance1=1.35, pattern.type1, pattern.color1, pattern.line.size1,background.color1, frame.color='black',frame.size=1.2, density1, pixel=14,
-                pattern.type.inner="blank",pattern.color.inner="white", pattern.line.size.inner=1,  background.color.inner="white", pixel.inner=10, density.inner=1, r1=3, r2=4)
+g<-patternring1(group1, pct1, label1, label.size1=4,label.color1='black', label.distance1=1.36, pattern.type1, pattern.color1, pattern.line.size1,background.color1, frame.color='black',frame.size=1.2, density1, pixel=13,
+                pattern.type.inner="blank",pattern.color.inner="white", pattern.line.size.inner=1,  background.color.inner="white", pixel.inner=10, density.inner=1, r1=2.7, r2=4)
 g<-g+annotate(geom="text", x=0, y=0, label="2019 Number of Cases \n N=1000",color="black", size=4)+scale_x_continuous(limits=c(-7, 7))+scale_y_continuous(limits=c(-7, 7))
 g
 
@@ -182,7 +182,7 @@ g<-g+scale_x_continuous(limits=c(-7, 7))+scale_y_continuous(limits=c(-7, 7))
 g
 
 
-## ----e7, fig.width=8, fig.height=6---------------------------------------
+## ----e7, fig.width=6, fig.height=6---------------------------------------
 #Example 1
 library(patternplot)
 library(png)
@@ -218,9 +218,9 @@ pattern.type<-c( 'Rsymbol_16', 'blank','hdashes')
 pattern.color=c('yellow', 'chartreuse4',  'pink')
 background.color=c('grey', 'chartreuse3',  'bisque')
 barp3<-patternbar(data,x, y,group,ylab='Monthly Expenses, Dollars', pattern.type=pattern.type, 
-                  pattern.color=pattern.color,background.color=background.color, pattern.line.size=c(8, 10,7),
-                  frame.size=1,frame.color='black',pixel=21, density=c(18, 10, 14), legend.type='h', 
-                  legend.h=12, legend.y.pos=0.49, vjust=-1, hjust=0.5,legend.pixel=7, legend.w=0.25,legend.x.pos=1.1) +scale_y_continuous(limits = c(0, 3100))+ggtitle('(C) Bar Chart with Two Grouping Variables')
+                  pattern.color=pattern.color,background.color=background.color, pattern.line.size=c(6, 10,6),
+                  frame.size=1,frame.color='black',pixel=16, density=c(18, 10, 14), legend.type='h', 
+                  legend.h=12, legend.y.pos=0.49, vjust=-1, hjust=0.5,legend.pixel=6, legend.w=0.275,legend.x.pos=1.1) +scale_y_continuous(limits = c(0, 3100))+ggtitle('(C) Bar Chart with Two Grouping Variables')
 barp3
 
 ## ----e8, fig.width=6, fig.height=6---------------------------------------
@@ -399,7 +399,7 @@ pattern.type<-c('Unicode_\u2640', 'Unicode_\u2642')
 pattern.color<-c('violet','deepskyblue')
 background.color=c('seashell','seashell')
 density<-c(10, 10)
-g2<-patternbar(data,x, y,group=NULL,ylab='Number of People', pattern.type=pattern.type,pattern.color=pattern.color, background.color=background.color,pattern.line.size=c(14, 14), density=density, pixel=18, vjust=-1, hjust=0.5, bar.width =0.5)+scale_y_continuous(limits = c(0, 60))+ggtitle('(A) Bar Chart with Gender Symbols')
+g2<-patternbar(data,x, y,group=NULL,ylab='Number of People', pattern.type=pattern.type,pattern.color=pattern.color, background.color=background.color,pattern.line.size=c(14, 14), density=density, pixel=18, vjust=-1, hjust=0.5, bar.width =0.5)+scale_y_continuous(limits = c(0, 60))+ggtitle('(B) Bar Chart with Gender Symbols')
 
 
 library(gridExtra)

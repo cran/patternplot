@@ -1,4 +1,4 @@
-dc2124ae6fd7b66c5ca7bb3b0386b520 *DESCRIPTION
+cce2ad17f5a24be3853c4d72dd73e0be *DESCRIPTION
 7af0c4d20d4e0bd4a1e04418588bb0d8 *NAMESPACE
 32aacde577f9ba3195fac3edbb317fa1 *R/RcppExports.R
 f107cc9ba61a6aa88be592bf23d5f054 *R/imagebar.R
@@ -20,9 +20,9 @@ cabf0e19942d7d33e3d3326f494cf617 *R/patternboxplot.R
 2c52939c23efd3ab9ecef5e47a962860 *R/slicepos.R
 c6a81b09f8b3806db229a84239d18375 *build/vignette.rds
 8f33fb97b85fb6b67e25993715ef9d92 *inst/CITATION
-2e394c8fba575e1bbd5a2f165b0eb711 *inst/doc/patternplot-intro.R
-bc56cf00c6eb82117f6293b45c5462c3 *inst/doc/patternplot-intro.Rmd
-2c9f8d522798fbf5555ca800c579be2e *inst/doc/patternplot-intro.html
+6a6401ac189d03588bdfdefdd195b75c *inst/doc/patternplot-intro.R
+bfe9bb4d01e36e7066654358d5200222 *inst/doc/patternplot-intro.Rmd
+e297464782b4eb4805238322f4b607f1 *inst/doc/patternplot-intro.html
 dc7232dd218671a02a74781706f7d84b *inst/extdata/fruits.csv
 d3ca62ff96f8cf94baefd8915ed63de1 *inst/extdata/letters.csv
 e91c105796435bc981c1f0083af2888e *inst/extdata/monthlyexp.csv
@@ -70,6 +70,6 @@ cd6a8f44873a8d207b6290ac9a2dd50a *vignettes/example-patternbar.R
 cc1d7405896fdd55e1515cdfa1fbe860 *vignettes/example-patternbar_s.R
 cedbc359866a70547155171057101609 *vignettes/example-patternboxplot.R
 dbf0f37f6bdb15998d6de38ac27bf7e7 *vignettes/example-patternpie.R
-9335d0c8175856ac7443eaec98e177db *vignettes/example-patternring1.R
+5bdf0af1bc42cab4b2238f5538378b43 *vignettes/example-patternring1.R
 84989fab9f7817486da6ffc8cbdb94c1 *vignettes/example-patternrings2.R
-bc56cf00c6eb82117f6293b45c5462c3 *vignettes/patternplot-intro.Rmd
+bfe9bb4d01e36e7066654358d5200222 *vignettes/patternplot-intro.Rmd

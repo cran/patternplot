@@ -22,5 +22,5 @@ pattern.type.inner="blank",pattern.color.inner="white", pattern.line.size.inner=
 background.color.inner="white", pixel.inner=10, density.inner=1, r1=3, r2=4)
 g<-g+annotate(geom="text", x=0, y=0,label="2019 Number of Cases \n N=1000",color="black",
 size=4)+scale_x_continuous(limits=c(-7, 7))+scale_y_continuous(limits=c(-7, 7))
-suppressWarnings(print(g))
+g
 

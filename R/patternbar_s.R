@@ -27,6 +27,7 @@
 #' @param legend.y.pos a numeric value to change the position of legends on y axis.
 #' @param legend.w a numeric value to change the width of legends.
 #' @param legend.pixel a numeric value to change pixel of legends.
+#' @param legend.label a vector to name legend labels. 
 #' @param bar.width a numeric value to change the width of the bars.  
 #' @return  A ggplot object.
 #'
@@ -38,15 +39,15 @@
 #'
 #' @example vignettes/example-patternbar_s.R
 
-patternbar_s<-function(data,x, y, group, xlab='', ylab='',  label.size=3.5,
+patternbar_s<-function(data,x, y, group, xlab='', ylab='',  label.size=3.5, 
                      pattern.type, pattern.line.size=rep(10, length(unique(group))),
                      pattern.color=rep('black', length(unique(group))),
                      background.color=rep('white', length(unique(group))), 
                      frame.color='black',frame.size=1,pixel=20, density=rep(12, length(unique(group))),
-                     legend.type='h', legend.h=6, legend.x.pos=1.1, legend.y.pos=0.49, legend.w=0.2, legend.pixel=20, bar.width=0.9){
+                     legend.type='h', legend.h=6, legend.x.pos=1.1, legend.y.pos=0.49, legend.w=0.2, legend.pixel=20, legend.label, bar.width=0.9){
     location<-gsub('\\','/',tempdir(), fixed=T)
     
-    bplot <- ggplot(data, aes(x, y, fill=group)) + geom_bar(stat="identity", position="stack", width = bar.width) +geom_text(aes(label=y),position=position_dodge(width=0.9)) 
+    bplot <- ggplot(data, aes(x, y, fill=group)) + geom_bar(stat="identity", position="stack", width = bar.width) 
     gdata<-ggplot_build(bplot)$data[[1]]
     gdata<-gdata[order(gdata$group),]
     boxmatrix<-list()
@@ -146,12 +147,12 @@ patternbar_s<-function(data,x, y, group, xlab='', ylab='',  label.size=3.5,
       legend.label.y<-(legend.frame.ymin+legend.frame.ymax)*legend.y.pos
       legend.label.x<-legend.x.s+legend.x.pos*legend.w
     }
-    
+    ldata<-data.frame(l.x=legend.label.x, l.y=legend.label.y, l.label=legend.label, stringsAsFactors = T)
    
-    X<-Y<-r<-g<-b<-a<-pos<-label<-NULL
+    X<-Y<-r<-g<-b<-a<-pos<-label<-l.x<-l.y<-l.label<-NULL
     g<- ggplot()+ mapply(function(i) geom_tile(data = picdata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:dim(gdata)[1])+scale_fill_identity()+geom_rect(aes(xmin=gdata[,"xmin"],xmax=gdata[,"xmax"],ymin=0,ymax=gdata[,"ymax"]), color=frame.color,size=frame.size, fill=NA)
     g<-g+ theme_bw()+xlab(xlab)+ylab(ylab)+ scale_x_continuous(breaks=seq(1:length(levels(x))), labels=levels(x))
-    g<-g+ mapply(function(i) geom_tile(data = legenddata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:length(pattern.type))+geom_text(aes(x=legend.label.x, y=legend.label.y, label=levels(group), hjust=0, vjust=0), size=label.size)+geom_rect(aes(xmin=legend.frame.xmin,xmax=legend.frame.xmax,ymin=legend.frame.ymin,ymax=legend.frame.ymax), color=frame.color,size=frame.size, fill=NA)
+    g<-g+ mapply(function(i) geom_tile(data = legenddata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:length(pattern.type))+geom_text(data=ldata, aes(x=l.x, y=l.y, label=l.label), hjust=0, vjust=0, size=label.size)+geom_rect(aes(xmin=legend.frame.xmin,xmax=legend.frame.xmax,ymin=legend.frame.ymin,ymax=legend.frame.ymax), color=frame.color,size=frame.size, fill=NA)
     g
   }
   

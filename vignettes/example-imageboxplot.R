@@ -13,4 +13,5 @@ y<-data$Weight
 group<-data$Store
 pattern.type<-list(Orange, Strawberry, Watermelon)
 imageboxplot(data,x,y,group=NULL,pattern.type=pattern.type,
-frame.color=c('orange', 'darkred', 'darkgreen'),ylab='Weight, Pounds')
+frame.color=c('orange', 'darkred', 'darkgreen'),
+legend.label="", ylab='Weight, Pounds')

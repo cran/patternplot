@@ -4,12 +4,29 @@
 \alias{imageboxplot}
 \title{Plot a boxplot with boxes filled with png and jpeg images.}
 \usage{
-imageboxplot(data, x, y, group = NULL, xlab = "", ylab = "",
-  label.size = 3.5, pattern.type, frame.color = "black",
-  linetype = "solid", frame.size = 1, outlier.shape = 21,
-  outlier.color = "black", outlier.size = 1, legend.type = "h",
-  legend.h = 6, legend.x.pos = 1.1, legend.y.pos = 0.49,
-  legend.w = 0.2, legend.pixel = 0.3)
+imageboxplot(
+  data,
+  x,
+  y,
+  group = NULL,
+  xlab = "",
+  ylab = "",
+  label.size = 3.5,
+  pattern.type,
+  frame.color = "black",
+  linetype = "solid",
+  frame.size = 1,
+  outlier.shape = 21,
+  outlier.color = "black",
+  outlier.size = 1,
+  legend.type = "h",
+  legend.h = 6,
+  legend.x.pos = 1.1,
+  legend.y.pos = 0.49,
+  legend.w = 0.2,
+  legend.pixel = 0.3,
+  legend.label
+)
 }
 \arguments{
 \item{data}{the data to be used.}
@@ -51,6 +68,8 @@ imageboxplot(data, x, y, group = NULL, xlab = "", ylab = "",
 \item{legend.w}{a numeric value to change the width of legends.}
 
 \item{legend.pixel}{a numeric value to change the pixel of legend boxes.}
+
+\item{legend.label}{a vector to name legend labels.}
 }
 \value{
 A ggplot object.
@@ -78,7 +97,8 @@ y<-data$Weight
 group<-data$Store
 pattern.type<-list(Orange, Strawberry, Watermelon)
 imageboxplot(data,x,y,group=NULL,pattern.type=pattern.type,
-frame.color=c('orange', 'darkred', 'darkgreen'),ylab='Weight, Pounds')
+frame.color=c('orange', 'darkred', 'darkgreen'),
+legend.label="", ylab='Weight, Pounds')
 }
 \seealso{
 Function \code{patternboxplot}

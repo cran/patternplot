@@ -31,6 +31,7 @@
 #' @param legend.y.pos a numeric value to change the position of legends on y axis.
 #' @param legend.w a numeric value to change the width of legends. 
 #' @param legend.pixel a numeric value to change pixel of legends.
+#' @param legend.label a vector to name legend labels. 
 #' @return  A ggplot object.
 #'
 #' @details \code{patternboxplot} function offers flexible ways of doing boxplots.
@@ -51,7 +52,7 @@ patternboxplot<-function(data,x, y, group=NULL, xlab='', ylab='',label.size=3.5,
                    frame.color=rep('black', ifelse(is.null(group), length(unique(x)), length(unique(group)))),
                    frame.size=1, pixel=20, 
                    density=rep(7, ifelse(is.null(group), length(unique(x)), length(unique(group)))),
-                   legend.type='h', legend.h=6, legend.x.pos=1.1, legend.y.pos=0.49, legend.w=0.2, legend.pixel=20){
+                   legend.type='h', legend.h=6, legend.x.pos=1.1, legend.y.pos=0.49, legend.w=0.2, legend.pixel=20, legend.label){
   location<-gsub('\\','/',tempdir(), fixed=T)
   if(is.null(group)){
     
@@ -86,7 +87,7 @@ patternboxplot<-function(data,x, y, group=NULL, xlab='', ylab='',label.size=3.5,
     #Outliers
     outliers <-gdata[, 'outliers']
     count<-sapply(outliers, length)
-    odata=data.frame(y=unlist(outliers), x=rep(gdata[, 'x'], count))
+    odata=data.frame(y=unlist(outliers), x=rep(gdata[, 'x'], count), stringsAsFactors = T)
     
     g<- ggplot()+ mapply(function(i) geom_tile(data = picdata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:dim(gdata)[1])+scale_fill_identity()+geom_rect(aes(xmin=gdata[,"xmin"],xmax=gdata[,"xmax"],ymin=gdata[,"lower"],ymax=gdata[,"upper"]), color=frame.color,size=frame.size, fill=NA)
     g<-g+geom_segment(aes(x=gdata[,"xmin"],y=gdata[,"middle"], xend=gdata[,"xmax"], yend=gdata[,"middle"]), color=frame.color,size=frame.size)+geom_segment(aes(x=gdata[,"xmiddel"],y=gdata[,"ymin"], xend=gdata[,"xmiddel"], yend=gdata[,"lower"]), color=frame.color, linetype=linetype,size=frame.size)+geom_segment(aes(x=gdata[,"xmiddel"],y=gdata[,"ymax"], xend=gdata[,"xmiddel"], yend=gdata[,"upper"]), color=frame.color, linetype=linetype,size=frame.size)
@@ -199,17 +200,19 @@ patternboxplot<-function(data,x, y, group=NULL, xlab='', ylab='',label.size=3.5,
     #Outliers
     outliers <-gdata[, 'outliers']
     count<-sapply(outliers, length)
-    odata=data.frame(y=unlist(outliers), x=rep(gdata[, 'x'], count))
+    odata=data.frame(y=unlist(outliers), x=rep(gdata[, 'x'], count), stringsAsFactors = T)
     
     frame.color2<-rep(frame.color,time=length(unique(x)))
     linetype2<-rep(linetype,time=length(unique(x)))
     
-    X<-Y<-r<-g<-b<-a<-pos<-NULL
+    ldata<-data.frame(l.x=legend.label.x, l.y=legend.label.y, l.label=legend.label, stringsAsFactors = T)
+    X<-Y<-r<-g<-b<-a<-pos<-l.x<-l.y<-l.label<-NULL
+    
     g<- ggplot()+ mapply(function(i) geom_tile(data = picdata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:dim(gdata)[1])+scale_fill_identity()+geom_rect(aes(xmin=gdata[,"xmin"],xmax=gdata[,"xmax"],ymin=gdata[,"lower"],ymax=gdata[,"upper"]), color=frame.color2,size=frame.size, fill=NA)
     g<-g+geom_segment(aes(x=gdata[,"xmin"],y=gdata[,"middle"], xend=gdata[,"xmax"], yend=gdata[,"middle"]), color=frame.color2,size=frame.size)+geom_segment(aes(x=gdata[,"xmiddel"],y=gdata[,"ymin"], xend=gdata[,"xmiddel"], yend=gdata[,"lower"]), color=frame.color2, linetype=linetype2,size=frame.size)+geom_segment(aes(x=gdata[,"xmiddel"],y=gdata[,"ymax"], xend=gdata[,"xmiddel"], yend=gdata[,"upper"]), color=frame.color2, linetype=linetype2,size=frame.size)
     g<-g+geom_segment(aes(x=gdata[,"xmiddel"]-gdata[, "xrange"],y=gdata[,"ymax"], xend=gdata[,"xmiddel"]+gdata[, "xrange"], yend=gdata[,"ymax"]), color=frame.color2,size=frame.size)+geom_segment(aes(x=gdata[,"xmiddel"]-gdata[, "xrange"],y=gdata[,"ymin"], xend=gdata[,"xmiddel"]+gdata[, "xrange"], yend=gdata[,"ymin"]), color=frame.color2,size=frame.size)
     g<-g+ theme_bw()+xlab(xlab)+ylab(ylab)+ scale_x_continuous(breaks=seq(1:length(levels(x))), labels=levels(x))+geom_point(data=odata, aes(x, y), shape=outlier.shape, color=outlier.color, size=outlier.size)
-    g+mapply(function(i) geom_tile(data = legenddata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:length(pattern.type))+geom_rect(aes(xmin=legend.frame.xmin,xmax=legend.frame.xmax,ymin=legend.frame.ymin,ymax=legend.frame.ymax), color=frame.color,size=frame.size, fill=NA)+geom_text(aes(x=legend.label.x, y=legend.label.y, label=levels(group), hjust=0, vjust=0), size=label.size)
+    g+mapply(function(i) geom_tile(data = legenddata[[i]], aes(x = X, y = Y, fill = rgb(r,g, b,a))),1:length(pattern.type))+geom_rect(aes(xmin=legend.frame.xmin,xmax=legend.frame.xmax,ymin=legend.frame.ymin,ymax=legend.frame.ymax), color=frame.color,size=frame.size, fill=NA)+geom_text(data=ldata, aes(x=l.x, y=l.y, label=l.label), hjust=0, vjust=0, size=label.size)
     
   }
     

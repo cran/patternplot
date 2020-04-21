@@ -4,18 +4,42 @@
 \alias{patternrings2}
 \title{Plot a ring chart using patterns and colors to fill the rings.}
 \usage{
-patternrings2(group1, group2, pct1, pct2, label1, label2,
-  label.size1 = 4, label.size2 = 4, label.color1 = "black",
-  label.color2 = "black", label.distance1 = 1.2,
-  label.distance2 = 1.2, pattern.type1, pattern.type2, pattern.color1,
-  pattern.color2, pattern.line.size1 = rep(10, length(group1)),
-  pattern.line.size2 = rep(10, length(group2)), background.color1,
-  background.color2, density1 = rep(10, length(group1)),
-  density2 = rep(10, length(group2)), pixel = 20,
-  pattern.type.inner = "blank", pattern.color.inner = "white",
-  pattern.line.size.inner = 1, background.color.inner = "white",
-  pixel.inner = 10, density.inner = 1, frame.color = "black",
-  frame.size = 1, r1, r2, r3)
+patternrings2(
+  group1,
+  group2,
+  pct1,
+  pct2,
+  label1,
+  label2,
+  label.size1 = 4,
+  label.size2 = 4,
+  label.color1 = "black",
+  label.color2 = "black",
+  label.distance1 = 1.2,
+  label.distance2 = 1.2,
+  pattern.type1,
+  pattern.type2,
+  pattern.color1,
+  pattern.color2,
+  pattern.line.size1 = rep(10, length(group1)),
+  pattern.line.size2 = rep(10, length(group2)),
+  background.color1,
+  background.color2,
+  density1 = rep(10, length(group1)),
+  density2 = rep(10, length(group2)),
+  pixel = 20,
+  pattern.type.inner = "blank",
+  pattern.color.inner = "white",
+  pattern.line.size.inner = 1,
+  background.color.inner = "white",
+  pixel.inner = 10,
+  density.inner = 1,
+  frame.color = "black",
+  frame.size = 1,
+  r1,
+  r2,
+  r3
+)
 }
 \arguments{
 \item{group1}{a vector of strings, containing the names of each slice for the inner ring.}
@@ -109,11 +133,11 @@ library(ggplot2)
 
 group1<-c("Wind", "Hydro", "Solar", "Coal", "Natural Gas", "Oil")
 pct1<-c(12, 15, 8, 22, 18, 25)
-label1<-paste(group1, " \\n ", pct1 , "\%", sep="")
+label1<-paste(group1, " \n ", pct1 , "\%", sep="")
 
 group2<-c("Renewable", "Non-Renewable")
 pct2<-c(35, 65)
-label2<-paste(group2, " \\n ", pct2 , "\%", sep="")
+label2<-paste(group2, " \n ", pct2 , "\%", sep="")
 
 pattern.type1<-rep(c( "blank"), times=6)
 pattern.type2<-c('grid', 'blank')

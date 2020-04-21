@@ -4,11 +4,27 @@
 \alias{imagebar}
 \title{Plot a bar chart with bars filled with png and jpeg images.}
 \usage{
-imagebar(data, x, y, group = NULL, xlab = "", ylab = "",
-  label.size = 3.5, vjust = -1, hjust = -1, pattern.type,
-  frame.color = "black", frame.size = 1, legend.type = "h",
-  legend.h = 6, legend.x.pos = 1.1, legend.y.pos = 0.49,
-  legend.w = 0.2, legend.pixel = 0.3, bar.width = 0.9)
+imagebar(
+  data,
+  x,
+  y,
+  group = NULL,
+  xlab = "",
+  ylab = "",
+  label.size = 3.5,
+  vjust = -1,
+  hjust = -1,
+  pattern.type,
+  frame.color = "black",
+  frame.size = 1,
+  legend.type = "h",
+  legend.h = 6,
+  legend.x.pos = 1.1,
+  legend.y.pos = 0.49,
+  legend.w = 0.2,
+  legend.pixel = 0.3,
+  bar.width = 0.9
+)
 }
 \arguments{
 \item{data}{the data to be used.}

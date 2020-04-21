@@ -4,20 +4,38 @@
 \alias{patternboxplot}
 \title{Plot a boxplot using patterns and colors to fill the boxes.}
 \usage{
-patternboxplot(data, x, y, group = NULL, xlab = "", ylab = "",
-  label.size = 3.5, linetype = rep("solid", ifelse(is.null(group),
-  length(unique(x)), length(unique(group)))), outlier.shape = 21,
-  outlier.color = "black", outlier.size = 1, pattern.type,
+patternboxplot(
+  data,
+  x,
+  y,
+  group = NULL,
+  xlab = "",
+  ylab = "",
+  label.size = 3.5,
+  linetype = rep("solid", ifelse(is.null(group), length(unique(x)),
+    length(unique(group)))),
+  outlier.shape = 21,
+  outlier.color = "black",
+  outlier.size = 1,
+  pattern.type,
   pattern.color = rep("black", ifelse(is.null(group), length(unique(x)),
-  length(unique(group)))), pattern.line.size = rep(5,
-  ifelse(is.null(group), length(x), length(unique(group)))),
-  background.color = rep("white", ifelse(is.null(group),
-  length(unique(x)), length(unique(group)))), frame.color = rep("black",
-  ifelse(is.null(group), length(unique(x)), length(unique(group)))),
-  frame.size = 1, pixel = 20, density = rep(7, ifelse(is.null(group),
-  length(unique(x)), length(unique(group)))), legend.type = "h",
-  legend.h = 6, legend.x.pos = 1.1, legend.y.pos = 0.49,
-  legend.w = 0.2, legend.pixel = 20)
+    length(unique(group)))),
+  pattern.line.size = rep(5, ifelse(is.null(group), length(x), length(unique(group)))),
+  background.color = rep("white", ifelse(is.null(group), length(unique(x)),
+    length(unique(group)))),
+  frame.color = rep("black", ifelse(is.null(group), length(unique(x)),
+    length(unique(group)))),
+  frame.size = 1,
+  pixel = 20,
+  density = rep(7, ifelse(is.null(group), length(unique(x)), length(unique(group)))),
+  legend.type = "h",
+  legend.h = 6,
+  legend.x.pos = 1.1,
+  legend.y.pos = 0.49,
+  legend.w = 0.2,
+  legend.pixel = 20,
+  legend.label
+)
 }
 \arguments{
 \item{data}{the data to be used.}
@@ -71,6 +89,8 @@ The pattern types include: 'blank', 'bricks', 'vdashes', 'hdashes', 'crosshatch'
 \item{legend.w}{a numeric value to change the width of legends.}
 
 \item{legend.pixel}{a numeric value to change pixel of legends.}
+
+\item{legend.label}{a vector to name legend labels.}
 }
 \value{
 A ggplot object.
@@ -101,14 +121,16 @@ pattern.line.size<-c(6, 1,6)
 density<-c(6, 1, 8)
 patternboxplot(data,x, y,group,pattern.type=pattern.type,pattern.line.size=pattern.line.size,
 pattern.color=pattern.color,background.color=background.color,frame.color=frame.color, 
-density=density,legend.h=2,legend.x.pos=1.1,legend.y.pos=0.49,legend.pixel=10, legend.w=0.2)
+density=density,legend.h=2,legend.x.pos=1.1,legend.y.pos=0.495,legend.pixel=10, legend.w=0.2, 
+legend.label=c("Orange", "Strawberry", "Watermelon"))
 
 #Example 2
 pattern.color=c('black','white', 'grey20')
 background.color=c('gold','lightpink', 'lightgreen')
 patternboxplot(data,x, y,group=group,pattern.type=pattern.type,pattern.line.size=pattern.line.size, 
 pattern.color=pattern.color, background.color=background.color,frame.color=frame.color, 
-density=density,legend.h=2,legend.x.pos=1.1,legend.y.pos=0.49,legend.pixel=10,legend.w=0.2)
+density=density,legend.h=2,legend.x.pos=1.1,legend.y.pos=0.495,legend.pixel=10,legend.w=0.2, 
+legend.label=c("Orange", "Strawberry", "Watermelon"))
 
 }
 \seealso{

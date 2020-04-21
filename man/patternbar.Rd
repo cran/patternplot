@@ -4,18 +4,34 @@
 \alias{patternbar}
 \title{Plot a bar chart using patterns and colors to fill the bars.}
 \usage{
-patternbar(data, x, y, group = NULL, xlab = "", ylab = "",
-  label.size = 3.5, vjust = -1, hjust = -1, pattern.type,
-  pattern.line.size = rep(5, ifelse(is.null(group), length(x),
-  length(unique(group)))), pattern.color = rep("black",
-  ifelse(is.null(group), length(x), length(unique(group)))),
+patternbar(
+  data,
+  x,
+  y,
+  group = NULL,
+  xlab = "",
+  ylab = "",
+  label.size = 3.5,
+  vjust = -1,
+  hjust = -1,
+  pattern.type,
+  pattern.line.size = rep(5, ifelse(is.null(group), length(x), length(unique(group)))),
+  pattern.color = rep("black", ifelse(is.null(group), length(x),
+    length(unique(group)))),
   background.color = rep("white", ifelse(is.null(group), length(x),
-  length(unique(group)))), frame.color = rep("black",
-  ifelse(is.null(group), length(x), length(unique(group)))),
-  frame.size = 1, pixel = 20, density = rep(7, ifelse(is.null(group),
-  length(x), length(unique(group)))), legend.type = "h", legend.h = 6,
-  legend.x.pos = 1.1, legend.y.pos = 0.49, legend.w = 0.2,
-  legend.pixel = 20, bar.width = 0.9)
+    length(unique(group)))),
+  frame.color = rep("black", ifelse(is.null(group), length(x), length(unique(group)))),
+  frame.size = 1,
+  pixel = 20,
+  density = rep(7, ifelse(is.null(group), length(x), length(unique(group)))),
+  legend.type = "h",
+  legend.h = 6,
+  legend.x.pos = 1.1,
+  legend.y.pos = 0.49,
+  legend.w = 0.2,
+  legend.pixel = 20,
+  bar.width = 0.9
+)
 }
 \arguments{
 \item{data}{the data to be used.}

@@ -4,8 +4,15 @@
 \alias{pattern}
 \title{Generate a pattern in png format.}
 \usage{
-pattern(type = "bricks", density = 8, pattern.line.size = 10,
-  color = "black", background.color = "white", pixel = 5, res = 30)
+pattern(
+  type = "bricks",
+  density = 8,
+  pattern.line.size = 10,
+  color = "black",
+  background.color = "white",
+  pixel = 5,
+  res = 30
+)
 }
 \arguments{
 \item{type}{pattern types include: 'blank', 'bricks', 'vdashes', 'hdashes', 'crosshatch','dots',

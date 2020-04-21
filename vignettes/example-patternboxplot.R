@@ -16,12 +16,14 @@ pattern.line.size<-c(6, 1,6)
 density<-c(6, 1, 8)
 patternboxplot(data,x, y,group,pattern.type=pattern.type,pattern.line.size=pattern.line.size,
 pattern.color=pattern.color,background.color=background.color,frame.color=frame.color, 
-density=density,legend.h=2,legend.x.pos=1.1,legend.y.pos=0.49,legend.pixel=10, legend.w=0.2)
+density=density,legend.h=2,legend.x.pos=1.1,legend.y.pos=0.495,legend.pixel=10, legend.w=0.2, 
+legend.label=c("Orange", "Strawberry", "Watermelon"))
 
 #Example 2
 pattern.color=c('black','white', 'grey20')
 background.color=c('gold','lightpink', 'lightgreen')
 patternboxplot(data,x, y,group=group,pattern.type=pattern.type,pattern.line.size=pattern.line.size, 
 pattern.color=pattern.color, background.color=background.color,frame.color=frame.color, 
-density=density,legend.h=2,legend.x.pos=1.1,legend.y.pos=0.49,legend.pixel=10,legend.w=0.2)
+density=density,legend.h=2,legend.x.pos=1.1,legend.y.pos=0.495,legend.pixel=10,legend.w=0.2, 
+legend.label=c("Orange", "Strawberry", "Watermelon"))
 

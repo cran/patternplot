@@ -4,11 +4,28 @@
 \alias{imagerings2}
 \title{Plot a ring chart using images to fill the rings.}
 \usage{
-imagerings2(group1, group2, pct1, pct2, label1, label2, label.size1 = 4,
-  label.size2 = 4, label.color1 = "black", label.color2 = "black",
-  label.distance1 = 1.2, label.distance2 = 1.2, pattern.type1,
-  pattern.type2, pattern.type.inner, frame.color = "black",
-  frame.size = 1, r1, r2, r3)
+imagerings2(
+  group1,
+  group2,
+  pct1,
+  pct2,
+  label1,
+  label2,
+  label.size1 = 4,
+  label.size2 = 4,
+  label.color1 = "black",
+  label.color2 = "black",
+  label.distance1 = 1.2,
+  label.distance2 = 1.2,
+  pattern.type1,
+  pattern.type2,
+  pattern.type.inner,
+  frame.color = "black",
+  frame.size = 1,
+  r1,
+  r2,
+  r3
+)
 }
 \arguments{
 \item{group1}{a vector of strings, containing the names of each slice for the inner ring.}
@@ -70,7 +87,7 @@ library(png)
 library(ggplot2)
 group1<-c("Wind", "Hydro", "Solar", "Coal", "Natural Gas", "Oil")
 pct1<-c(12, 15, 8, 22, 18, 25)
-label1<-paste(group1, " \\n ", pct1 , "\%", sep="")
+label1<-paste(group1, " \n ", pct1 , "\%", sep="")
 location<-gsub('\\\\','/',tempdir(), fixed=TRUE)
 pattern(type="blank", density=1, color='white', pattern.line.size=1, 
 background.color="darkolivegreen1",  pixel=18, res=12)
@@ -94,7 +111,7 @@ pattern.type1<-list(Wind, Hydro, Solar, Coal, NaturalGas, Oil)
 
 group2<-c("Renewable", "Non-Renewable")
 pct2<-c(35, 65)
-label2<-paste(group2, " \\n ", pct2 , "\%", sep="")
+label2<-paste(group2, " \n ", pct2 , "\%", sep="")
 pattern(type="grid", density=12, color='white', pattern.line.size=5, 
 background.color="seagreen", pixel=18, res=12)
 Renewable<-readPNG(paste(location,'/',"grid",".png", sep=''))

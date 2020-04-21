@@ -4,11 +4,26 @@
 \alias{imagebar_s}
 \title{Plot a stacked bar chart with bars filled with png and jpeg images.}
 \usage{
-imagebar_s(data, x, y, group, xlab = "", ylab = "", pattern.type,
-  label.size = 3.5, frame.color = "black", frame.size = 1,
-  legend.type = "h", legend.h = 6, legend.x.pos = 1.1,
-  legend.y.pos = 0.49, legend.w = 0.2, legend.pixel = 20,
-  bar.width = 0.9)
+imagebar_s(
+  data,
+  x,
+  y,
+  group,
+  xlab = "",
+  ylab = "",
+  pattern.type,
+  label.size = 3.5,
+  frame.color = "black",
+  frame.size = 1,
+  legend.type = "h",
+  legend.h = 6,
+  legend.x.pos = 1.1,
+  legend.y.pos = 0.49,
+  legend.w = 0.2,
+  legend.pixel = 20,
+  legend.label,
+  bar.width = 0.9
+)
 }
 \arguments{
 \item{data}{the data to be used.}
@@ -42,7 +57,9 @@ if legend.type='v', the layout of legends is vertical.}
 
 \item{legend.w}{a numeric value to change the width of legends.}
 
-\item{legend.pixel}{a numeric value to change the pixel of legend boxes}
+\item{legend.pixel}{a numeric value to change the pixel of legend boxes.}
+
+\item{legend.label}{a vector to name legend labels.}
 
 \item{bar.width}{a numeric value to change the width of the bars.}
 }
@@ -70,10 +87,10 @@ y<-data$Amount
 group<-data$Type
 pattern.type<-list(childcare, food, housing)
 
-imagebar_s(data,x, y, group, xlab='', ylab='Monthly Expenses, Dollar',
-pattern.type=pattern.type, label.size=3.5, frame.size=1, frame.color='black',
-legend.type='h', legend.h=6, legend.y.pos=0.49, legend.pixel=20, legend.w=0.2,
- legend.x.pos=1.1)+scale_y_continuous(limits = c(0, 6800))
+imagebar_s(data,x,y,group,xlab='',ylab='Monthly Expenses, Dollar',pattern.type=pattern.type,
+label.size=3.5,frame.size=1,frame.color='black',legend.type='h',legend.h=6,legend.y.pos=0.49,
+legend.pixel=20, legend.w=0.2,legend.x.pos=1.1,
+legend.label=c("Childcare", "Food", "Housing"))+scale_y_continuous(limits = c(0, 6800))
 
 
 

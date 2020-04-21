@@ -4,9 +4,17 @@
 \alias{imagepie}
 \title{Plot a pie chart with slices filled with png and jpeg images.}
 \usage{
-imagepie(group, pct, label, label.size = 4, label.color = "black",
-  label.distance = 1.35, pattern.type, frame.color = "black",
-  frame.size = 1)
+imagepie(
+  group,
+  pct,
+  label,
+  label.size = 4,
+  label.color = "black",
+  label.distance = 1.35,
+  pattern.type,
+  frame.color = "black",
+  frame.size = 1
+)
 }
 \arguments{
 \item{group}{a vector of strings, containing the names of each slice.}

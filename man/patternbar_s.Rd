@@ -4,15 +4,31 @@
 \alias{patternbar_s}
 \title{Plot a stacked bar chart using patterns and colors to fill the bars.}
 \usage{
-patternbar_s(data, x, y, group, xlab = "", ylab = "",
-  label.size = 3.5, pattern.type, pattern.line.size = rep(10,
-  length(unique(group))), pattern.color = rep("black",
-  length(unique(group))), background.color = rep("white",
-  length(unique(group))), frame.color = "black", frame.size = 1,
-  pixel = 20, density = rep(12, length(unique(group))),
-  legend.type = "h", legend.h = 6, legend.x.pos = 1.1,
-  legend.y.pos = 0.49, legend.w = 0.2, legend.pixel = 20,
-  bar.width = 0.9)
+patternbar_s(
+  data,
+  x,
+  y,
+  group,
+  xlab = "",
+  ylab = "",
+  label.size = 3.5,
+  pattern.type,
+  pattern.line.size = rep(10, length(unique(group))),
+  pattern.color = rep("black", length(unique(group))),
+  background.color = rep("white", length(unique(group))),
+  frame.color = "black",
+  frame.size = 1,
+  pixel = 20,
+  density = rep(12, length(unique(group))),
+  legend.type = "h",
+  legend.h = 6,
+  legend.x.pos = 1.1,
+  legend.y.pos = 0.49,
+  legend.w = 0.2,
+  legend.pixel = 20,
+  legend.label,
+  bar.width = 0.9
+)
 }
 \arguments{
 \item{data}{the data to be used.}
@@ -59,6 +75,8 @@ The pattern types include: 'blank', 'bricks', 'vdashes', 'hdashes', 'crosshatch'
 
 \item{legend.pixel}{a numeric value to change pixel of legends.}
 
+\item{legend.label}{a vector to name legend labels.}
+
 \item{bar.width}{a numeric value to change the width of the bars.}
 }
 \value{
@@ -82,10 +100,11 @@ y<-data$Amount
 group<-data$Type
 
 patternbar_s(data,x, y, group,xlab='', ylab='Monthly Expenses, Dollar', label.size=3.5,
-pattern.type=c('Unicode_\\u266B', 'nwlines', 'bricks'),pattern.line.size=c(10, 5, 5),frame.size=1,
+pattern.type=c('Unicode_\u266B', 'nwlines', 'bricks'),pattern.line.size=c(10, 5, 5),frame.size=1,
 pattern.color=c('blue', 'green', 'white'),background.color=c('white', 'white', 'orange'),pixel=20, 
 density=c(10, 10, 10),frame.color='black', legend.type='h', legend.h=10, legend.y.pos=0.49,
-legend.pixel=10, legend.w=0.25, legend.x.pos=1.1)+scale_y_continuous(limits = c(0, 6800))
+legend.pixel=10, legend.w=0.25, legend.x.pos=1.1, 
+legend.label=c("Childcare", "Food", "Housing" ))+scale_y_continuous(limits = c(0, 6800))
 
 }
 \seealso{

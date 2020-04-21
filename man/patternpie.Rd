@@ -4,12 +4,22 @@
 \alias{patternpie}
 \title{Plot a pie chart using patterns and colors to fill the slices.}
 \usage{
-patternpie(group, pct, label, label.size = 4, label.color = "black",
-  label.distance = 1.2, pattern.type, pattern.color = rep("black",
-  length(group)), pattern.line.size = rep(5, length(group)),
+patternpie(
+  group,
+  pct,
+  label,
+  label.size = 4,
+  label.color = "black",
+  label.distance = 1.2,
+  pattern.type,
+  pattern.color = rep("black", length(group)),
+  pattern.line.size = rep(5, length(group)),
   background.color = rep("white", length(group)),
-  frame.color = "black", frame.size = 1, density = rep(10,
-  length(group)), pixel = 20)
+  frame.color = "black",
+  frame.size = 1,
+  density = rep(10, length(group)),
+  pixel = 20
+)
 }
 \arguments{
 \item{group}{a vector of strings, containing the names of each slice.}

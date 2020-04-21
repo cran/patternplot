@@ -1,10 +1,10 @@
-## ----setup, include=FALSE------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 library(knitr)
 library(Cairo)
 opts_chunk$set(out.extra='style="display:block; margin: auto"', fig.align="center", dev='CairoPNG')
 options(warn=-1)
 
-## ----e1, fig.height = 6, fig.width = 10----------------------------------
+## ----e1, fig.height = 6, fig.width = 10---------------------------------------
 library(patternplot)
 library(png)
 library(ggplot2)
@@ -27,7 +27,7 @@ library(gridExtra)
 grid.arrange(pie1,pie2,  nrow = 1)
 
 
-## ----e2, fig.height = 6, fig.width = 6-----------------------------------
+## ----e2, fig.height = 6, fig.width = 6----------------------------------------
 library(patternplot)
 library(ggplot2)
 library(jpeg)
@@ -42,7 +42,7 @@ imagepie(group=data$group,pct=data$pct,label=data$label,pattern.type=pattern.typ
          label.distance=1.3,frame.color='burlywood4', frame.size=0.8, label.size=6,
          label.color='forestgreen')+ggtitle('Pie Chart with Images')
 
-## ----e3, fig.height = 6.5, fig.width = 6.5-------------------------------
+## ----e3, fig.height = 6.5, fig.width = 6.5------------------------------------
 library(patternplot)
 library(png)
 library(ggplot2)
@@ -63,7 +63,7 @@ g<-g+annotate(geom="text", x=0, y=0, label="2019 Number of Cases \n N=1000",colo
 g
 
 
-## ----e4, fig.height = 6, fig.width = 6-----------------------------------
+## ----e4, fig.height = 6, fig.width = 6----------------------------------------
 #Example 1
 library(patternplot)
 library(png)
@@ -99,7 +99,7 @@ g<-g+annotate(geom="text", x=0, y=-2, label="2019 Number of Cases \n N=1000",col
 g
 
 
-## ----e5, fig.height = 6, fig.width = 10----------------------------------
+## ----e5, fig.height = 6, fig.width = 10---------------------------------------
 library(patternplot)
 library(png)
 library(ggplot2)
@@ -143,7 +143,7 @@ library(gridExtra)
 grid.arrange(g1,g2,  nrow = 1)
 
 
-## ----e6, fig.height = 6, fig.width = 6-----------------------------------
+## ----e6, fig.height = 6, fig.width = 6----------------------------------------
 #Example 1
 library(patternplot)
 library(png)
@@ -182,7 +182,7 @@ g<-g+scale_x_continuous(limits=c(-7, 7))+scale_y_continuous(limits=c(-7, 7))
 g
 
 
-## ----e7, fig.width=6, fig.height=6---------------------------------------
+## ----e7, fig.width=6, fig.height=6--------------------------------------------
 #Example 1
 library(patternplot)
 library(png)
@@ -223,7 +223,7 @@ barp3<-patternbar(data,x, y,group,ylab='Monthly Expenses, Dollars', pattern.type
                   legend.h=12, legend.y.pos=0.49, vjust=-1, hjust=0.5,legend.pixel=6, legend.w=0.275,legend.x.pos=1.1) +scale_y_continuous(limits = c(0, 3100))+ggtitle('(C) Bar Chart with Two Grouping Variables')
 barp3
 
-## ----e8, fig.width=6, fig.height=6---------------------------------------
+## ----e8, fig.width=6, fig.height=6--------------------------------------------
 #Example 1
 library(patternplot)
 library(png)
@@ -233,9 +233,9 @@ x<-data$Location
 y<-data$Amount
 group<-data$Type
 
-patternbar_s(data,x, y, group,xlab='', ylab='Monthly Expenses, Dollar', label.size=3,pattern.type=c( 'Rsymbol_16', 'blank','hdashes'), pattern.line.size=c(5, 10, 10),frame.size=1,pattern.color=c('yellow', 'chartreuse4',  'pink'),background.color=c('grey', 'chartreuse3',  'bisque'), pixel=16, density=c(18, 10, 10),frame.color='black', legend.type='h', legend.h=12, legend.y.pos=0.49, legend.pixel=6, legend.w=0.275, legend.x.pos=1.05, bar.width=0.8)+scale_y_continuous(limits = c(0, 6800))+ggtitle('Stacked Bar Chart')
+patternbar_s(data,x, y, group,xlab='', ylab='Monthly Expenses, Dollar', label.size=3,pattern.type=c( 'Rsymbol_16', 'blank','hdashes'), pattern.line.size=c(5, 10, 10),frame.size=1,pattern.color=c('yellow', 'chartreuse4',  'pink'),background.color=c('grey', 'chartreuse3',  'bisque'), pixel=16, density=c(18, 10, 10),frame.color='black', legend.type='h', legend.h=12, legend.y.pos=0.49, legend.pixel=6, legend.w=0.275, legend.x.pos=1.05,legend.label=c("Childcare", "Food", "Housing" ),  bar.width=0.8)+scale_y_continuous(limits = c(0, 6800))+ggtitle('Stacked Bar Chart')
 
-## ----e9, fig.width=6, fig.height=6---------------------------------------
+## ----e9, fig.width=6, fig.height=6--------------------------------------------
 library(patternplot)
 library(jpeg)
 library(ggplot2)
@@ -264,7 +264,7 @@ imagebar(data,x, y,group,pattern.type=pattern.type,vjust=-1, hjust=0.5,
          frame.color='black',
          ylab='Monthly Expenses, Dollars')+ggtitle('(B) Image Bar Chart with Two Grouping Variables')
 
-## ----e10, fig.width=6, fig.height=6--------------------------------------
+## ----e10, fig.width=6, fig.height=6-------------------------------------------
 library(patternplot)
 library(jpeg)
 library(ggplot2)
@@ -279,10 +279,10 @@ y<-data$Amount
 group<-data$Type
 pattern.type<-list(childcare, food, housing)
 
-imagebar_s(data,x, y, group, xlab='', ylab='Monthly Expenses, Dollar',  pattern.type=pattern.type, label.size=3.5, frame.size=1.25, frame.color='black',legend.type='h', legend.h=6, legend.y.pos=0.49, legend.pixel=20, legend.w=0.2,legend.x.pos=1.1)+ scale_y_continuous(limits = c(0, 6800))+ggtitle('Stacked Bar Chart with Images')
+imagebar_s(data,x, y, group, xlab='', ylab='Monthly Expenses, Dollar',  pattern.type=pattern.type, label.size=3.5, frame.size=1.25, frame.color='black',legend.type='h', legend.h=6, legend.y.pos=0.49, legend.pixel=20, legend.w=0.2,legend.x.pos=1.1, legend.label=c("Childcare", "Food", "Housing" ))+ scale_y_continuous(limits = c(0, 6800))+ggtitle('Stacked Bar Chart with Images')
 
 
-## ----e11, fig.height = 6, fig.width = 12---------------------------------
+## ----e11, fig.height = 6, fig.width = 12--------------------------------------
 #Example 1
 data <- read.csv(system.file("extdata", "fruits.csv", package="patternplot"))
 group<-data$Fruit
@@ -295,21 +295,18 @@ background.color=c('white','gray80', 'white')
 frame.color=c('black', 'black', 'black')
 pattern.line.size<-c(6, 1,6)
 density<-c(6, 1, 8)
-box1<-patternboxplot(data,x, y,group,pattern.type=pattern.type,pattern.line.size=pattern.line.size, label.size=3,
-               pattern.color=pattern.color, background.color=background.color,frame.color=frame.color, 
-               density=density,  legend.h=2, legend.x.pos=1.075, legend.y.pos=0.499, legend.pixel=10, legend.w=0.18)+ggtitle('(A) Boxplot with Black and White Patterns')
+box1<-patternboxplot(data,x, y,group,pattern.type=pattern.type,pattern.line.size=pattern.line.size, label.size=3, pattern.color=pattern.color, background.color=background.color,frame.color=frame.color, 
+density=density,  legend.h=2, legend.x.pos=1.075, legend.y.pos=0.499, legend.pixel=10,legend.w=0.18, legend.label=c("Orange","Strawberry","Watermelon"))+ggtitle('(A) Boxplot with Black and White Patterns')
 
 #Example 2
 pattern.color=c('black','white', 'grey20')
 background.color=c('gold','lightpink', 'lightgreen')
-box2<-patternboxplot(data,x, y,group=group,pattern.type=pattern.type,pattern.line.size=pattern.line.size, label.size=3,
-               pattern.color=pattern.color, background.color=background.color,
-               frame.color=frame.color, density=density,  legend.h=2, legend.x.pos=1.075, legend.y.pos=0.499, legend.pixel=10, legend.w=0.18)+ggtitle('(B) Boxplot with Colors and Patterns')
+box2<-patternboxplot(data,x, y,group=group,pattern.type=pattern.type,pattern.line.size=pattern.line.size, label.size=3,pattern.color=pattern.color, background.color=background.color,frame.color=frame.color, density=density,legend.h=2, legend.x.pos=1.075, legend.y.pos=0.499, legend.pixel=10,legend.w=0.18, legend.label=c("Orange","Strawberry","Watermelon"))+ggtitle('(B) Boxplot with Colors and Patterns')
 
 library(gridExtra)
 grid.arrange(box1,box2,  nrow = 1)
 
-## ----e12, fig.height = 6, fig.width = 12---------------------------------
+## ----e12, fig.height = 6, fig.width = 12--------------------------------------
 library(patternplot)
 library(jpeg)
 library(ggplot2)
@@ -324,19 +321,20 @@ x<-data$Fruit
 y<-data$Weight
 group<-data$Store
 pattern.type<-list(Orange, Strawberry, Watermelon)
-box1<-imageboxplot(data,x, y,group=NULL,pattern.type=pattern.type,frame.color=c('orange', 'darkred', 'darkgreen'),ylab='Weight, Pounds')+ggtitle('(A) Image Boxplot with One Grouping Variable')
+box1<-imageboxplot(data,x, y,group=NULL,pattern.type=pattern.type,frame.color=c('orange','darkred',
+'darkgreen'),legend.label="", ylab='Weight, Pounds')+ggtitle('(A) Image Boxplot with One Grouping Variable')
 
 #Example 2
 x<-data$Store
 y<-data$Weight
 group<-data$Fruit
 pattern.type<-list(Orange, Strawberry, Watermelon)
-box2<-imageboxplot(data,x, y,group=group, pattern.type=pattern.type, frame.color=c('orange', 'darkred', 'darkgreen'), linetype=c('solid', 'dashed', 'dotted'),frame.size=0.8, xlab='', ylab='Weights, pounds', legend.h=2, legend.x.pos=1.1, legend.y.pos=0.499, legend.w=0.2)+ggtitle('(B) Image Boxplot with Two Grouping Variables')
+box2<-imageboxplot(data,x, y,group=group, pattern.type=pattern.type, frame.color=c('orange', 'darkred', 'darkgreen'), linetype=c('solid', 'dashed', 'dotted'),frame.size=0.8, xlab='', ylab='Weights, pounds', legend.h=2, legend.x.pos=1.1, legend.y.pos=0.499, legend.w=0.2, legend.label=c("Orange", "Strawberry", "Watermelon"))+ggtitle('(B) Image Boxplot with Two Grouping Variables')
 
 library(gridExtra)
 grid.arrange(box1,box2,  nrow = 1)
 
-## ----e13, fig.height = 6, fig.width = 12---------------------------------
+## ----e13, fig.height = 6, fig.width = 12--------------------------------------
 library(patternplot)
 library(png)
 library(ggplot2)
@@ -358,7 +356,7 @@ g3<-patternbar(data,x, y,group=NULL,ylab='Monthly Expenses, Dollars', pattern.ty
 library(gridExtra)
 grid.arrange(g1,g2,g3,  nrow = 1)
 
-## ----e14, fig.height = 6, fig.width = 10---------------------------------
+## ----e14, fig.height = 6, fig.width = 10--------------------------------------
 library(patternplot)
 library(png)
 library(ggplot2)
@@ -378,7 +376,7 @@ g2<-patternbar(data,x, y,group=NULL,ylab='Monthly Expenses, Dollars', pattern.ty
 library(gridExtra)
 grid.arrange(g1,g2,  nrow = 1)
 
-## ----e15, fig.height = 6, fig.width = 10---------------------------------
+## ----e15, fig.height = 6, fig.width = 10--------------------------------------
 library(patternplot)
 library(png)
 library(ggplot2)

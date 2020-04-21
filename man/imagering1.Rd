@@ -4,9 +4,20 @@
 \alias{imagering1}
 \title{Plot a ring chart using images to fill the ring.}
 \usage{
-imagering1(group1, pct1, pattern.type1, pattern.type.inner,
-  frame.color = "black", frame.size = 1, label1, label.size1 = 4,
-  label.color1 = "black", label.distance1 = 1.2, r1, r2)
+imagering1(
+  group1,
+  pct1,
+  pattern.type1,
+  pattern.type.inner,
+  frame.color = "black",
+  frame.size = 1,
+  label1,
+  label.size1 = 4,
+  label.color1 = "black",
+  label.distance1 = 1.2,
+  r1,
+  r2
+)
 }
 \arguments{
 \item{group1}{a vector of strings, containing the names of each slice.}
@@ -79,7 +90,7 @@ Southwest <-readPNG(paste(location,'/',"blank",".png", sep=''))
 group1<-c('New_England','Great_Lakes','Plains','Rocky_Mountain', 'Far_West',
 'Southwest', 'Southeast', 'Mideast')
 pct1<-c( 12, 11, 17, 15, 8, 11,  16,  10)
-label1<-paste(group1, " \\n ", pct1, "\%", sep="")
+label1<-paste(group1, " \n ", pct1, "\%", sep="")
 
 pattern.type1<-list(NewEngland, GreatLakes,Plains,  RockyMountain, FarWest,
 Southwest, Southeast,  Mideast)

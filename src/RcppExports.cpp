@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // imagetodf1
 DataFrame imagetodf1(NumericVector& image_matrix, NumericMatrix V, float bottom, float top, float left, float right);
 RcppExport SEXP _patternplot_imagetodf1(SEXP image_matrixSEXP, SEXP VSEXP, SEXP bottomSEXP, SEXP topSEXP, SEXP leftSEXP, SEXP rightSEXP) {

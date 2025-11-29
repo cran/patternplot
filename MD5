@@ -1,5 +1,5 @@
-a5b43c8992acba538bc28154ff7bf4f7 *DESCRIPTION
-7af0c4d20d4e0bd4a1e04418588bb0d8 *NAMESPACE
+9f7dc2da7afa5776e54c706dd7d1e178 *DESCRIPTION
+420d37f896be07c0113399bf87235377 *NAMESPACE
 32aacde577f9ba3195fac3edbb317fa1 *R/RcppExports.R
 6630530a49725a64dcbaae9d070536b0 *R/imagebar.R
 a5a256c7d7a265ee6657f0dc7a031fa8 *R/imagebar_s.R
@@ -18,11 +18,11 @@ d3065b5ba5767e353554c78a5134ce73 *R/labelposition.R
 86a39ea605c9498bb385768f9cfdc191 *R/patternrings2.R
 bbabdf2c18e258ae3d7dc087ece202fd *R/ringpos.R
 f3480333e21111d708721d2a75bc3291 *R/slicepos.R
-00d9560bb8105890904c75e996ce7bed *build/vignette.rds
-8f33fb97b85fb6b67e25993715ef9d92 *inst/CITATION
+0d9681cf8fe4ca6eb71fdd65d8616773 *build/vignette.rds
+6774b03c6a3ddfeff29dfde3ae1f1ec1 *inst/CITATION
 d2eb4b5cfad5ff8fdafcb13c12b9af0d *inst/doc/patternplot-intro.R
 f2dec00c50701539d4babde142d374a6 *inst/doc/patternplot-intro.Rmd
-7cad542629a4d6533de95b6cfa1f56fd *inst/doc/patternplot-intro.html
+2165cf86bf1adf325fd0a18ae5236774 *inst/doc/patternplot-intro.html
 dc7232dd218671a02a74781706f7d84b *inst/extdata/fruits.csv
 d3ca62ff96f8cf94baefd8915ed63de1 *inst/extdata/letters.csv
 e91c105796435bc981c1f0083af2888e *inst/extdata/monthlyexp.csv
@@ -52,9 +52,9 @@ ff95fbbfbb5bb9970a4ccdc13df52347 *man/patternboxplot.Rd
 b58b6b7e0b07ac94cef19d5adba9c91c *man/patternpie.Rd
 f359d27466b47a3612804b3c6ffefd85 *man/patternring1.Rd
 c6e529e4f3c9ef61405f7d3a62602e73 *man/patternrings2.Rd
-8465ee3c046dc4b929d81033152f5339 *src/Makevars
-1344f2b0991ab305a1a99893493c907d *src/Makevars.win
-748c0e47d74cf753f50795dfe0ffa5e2 *src/RcppExports.cpp
+58f56bd0ce603d99e89312316796ff0a *src/Makevars
+8ab890c7d17e75c9cd8b9267c1f24bb1 *src/Makevars.win
+2b35c6ede0046d512b2913d7902159ab *src/RcppExports.cpp
 9993d3ca9c09209d5a4b966e43f646bc *src/imagetodf1.cpp
 45a7867f681fb4c34758c1c0ce5e51f8 *src/imagetodf2.cpp
 2313f0a794c195900c049974cede98b3 *src/imagetodf3.cpp
